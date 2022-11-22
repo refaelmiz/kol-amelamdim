@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "api-errors": "libs/api-errors",
+    "constants": "libs/constants",
+    "kol-amelamdim": "apps/kol-amelamdim",
+    "models": "libs/models",
+    "styled": "libs/styled",
+    "types": "libs/types",
+    "utils": "libs/utils"
+  }
+}

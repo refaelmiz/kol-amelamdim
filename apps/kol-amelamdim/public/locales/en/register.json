@@ -1,0 +1,16 @@
+{
+  "h1": "Register",
+  "email": "Email",
+  "password": "Password",
+  "fullName": "Full name",
+  "submit": "Submit",
+  "login-txt": "Already signed in?",
+  "login-btn": "Login",
+  "phone-number": "Phone number",
+  "approve-terms": "I agree",
+  "approve-terms-link": "to the terms and conditions",
+  "page": "page",
+  "of": "of",
+  "previous-page": "Previous page",
+  "next-page": "Next page"
+}
