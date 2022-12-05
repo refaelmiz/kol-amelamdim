@@ -4,7 +4,9 @@ import { i18n } from 'next-i18next';
 export default function Document() {
   return (
     <Html dir={i18n.language === 'he' ? 'rtl' : 'ltr'}>
-      <Head />
+      <Head>
+        <meta name="google-site-verification" content="ki8Gg9GvsjUxnQNDTwhUrwLDzrusa-VOV7xhZokAl-8" />
+      </Head>
       <body>
         <Main />
         <NextScript />
