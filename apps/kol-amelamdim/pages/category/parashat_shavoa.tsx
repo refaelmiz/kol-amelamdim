@@ -153,6 +153,7 @@ export async function getStaticProps(context) {
   try {
     await connect();
     const files = await File.find({ category: 'parashat_shavoa', approved: true });
+    await i18n.reloadResources();
 
     return {
       props: {
