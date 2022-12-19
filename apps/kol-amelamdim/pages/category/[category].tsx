@@ -184,6 +184,7 @@ export async function getStaticProps(context) {
       props: {
         files: [],
         error: true,
+        revalidate: 10,
         ...(await serverSideTranslations(
           context.locale,
           ['category', 'home'],
