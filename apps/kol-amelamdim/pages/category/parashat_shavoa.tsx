@@ -39,7 +39,6 @@ const CategoryPage = ({ files, error }) => {
   const { t } = useTranslation('category');
   const { category } = router.query;
   const { setAlertMessage, setAlertType } = useContext(AlertContext);
-  const displayedCategory = Categories.filter((cat) => cat.URL === category);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -80,7 +79,7 @@ const CategoryPage = ({ files, error }) => {
     <StyledPageContainer>
       <>
         <Typography variant="h3" component="h2" sx={{ mt: 2 }}>
-          {t(`${displayedCategory[0].URL}`)}
+          {t('parashat_shavoa')}
         </Typography>
         <FilterCard
           setFileType={setFileType}
@@ -150,23 +149,10 @@ CategoryPage.getLayout = function getLayout(page: ReactElement) {
 
 export default CategoryPage;
 
-export async function getStaticPaths(context) {
-  const paths = Categories.map((category: CategoryObj) =>
-    context.locales.map((locale) => ({
-      params: { category: category.URL },
-      locale,
-      defaultLocale: 'he'
-    }))
-  ).flat();
-
-  return { paths, fallback: false };
-}
-
 export async function getStaticProps(context) {
   try {
-    const category = context.params.category;
     await connect();
-    const files = await File.find({ category, approved: true });
+    const files = await File.find({ category: 'parashat_shavoa', approved: true });
 
     return {
       props: {
