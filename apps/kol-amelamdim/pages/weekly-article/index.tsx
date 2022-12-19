@@ -66,6 +66,7 @@ export async function getStaticProps({ locale }) {
           i18nConfig
         )),
       },
+      revalidate: 10,
     };
   } catch (e) {
     return {
@@ -76,6 +77,7 @@ export async function getStaticProps({ locale }) {
           i18nConfig
         )),
       },
+      revalidate: 10,
     };
   }
 }
