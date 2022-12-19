@@ -171,7 +171,7 @@ export async function getStaticProps(context) {
       props: {
         files: JSON.parse(JSON.stringify(files)),
         error: false,
-        revalidate: 60,
+        revalidate: 10,
         ...(await serverSideTranslations(
           context.locale,
           ['category', 'home'],
