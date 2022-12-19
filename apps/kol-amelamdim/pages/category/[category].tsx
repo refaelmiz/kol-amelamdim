@@ -30,7 +30,6 @@ import { File } from '@kol-amelamdim/models';
 const rowsPerPage = 25;
 
 const CategoryPage = ({ files, error }) => {
-  console.log(files);
   const [fileType, setFileType] = useState('');
   const [filterText, setFilterText] = useState('');
   const [page, setPage] = useState<number>(0);
@@ -172,6 +171,7 @@ export async function getStaticProps(context) {
       props: {
         files: JSON.parse(JSON.stringify(files)),
         error: false,
+        revalidate: 60,
         ...(await serverSideTranslations(
           context.locale,
           ['category', 'home'],
