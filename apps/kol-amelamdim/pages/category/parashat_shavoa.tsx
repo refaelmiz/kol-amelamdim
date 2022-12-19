@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { i18n, useTranslation } from 'next-i18next';
-import { Category, Categories, IFile, CategoryObj } from '@kol-amelamdim/types';
+import { Category, IFile } from '@kol-amelamdim/types';
 import { StyledPageContainer } from '@kol-amelamdim/styled';
 import { FILE_TYPES_DICTIONARY } from '@kol-amelamdim/types';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
