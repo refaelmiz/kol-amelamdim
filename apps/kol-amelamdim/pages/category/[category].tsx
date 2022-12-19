@@ -171,26 +171,26 @@ export async function getStaticProps(context) {
       props: {
         files: JSON.parse(JSON.stringify(files)),
         error: false,
-        revalidate: 10,
         ...(await serverSideTranslations(
           context.locale,
           ['category', 'home'],
           i18nConfig
         )),
       },
+      revalidate: 10,
     };
   } catch (e) {
     return {
       props: {
         files: [],
         error: true,
-        revalidate: 10,
         ...(await serverSideTranslations(
           context.locale,
           ['category', 'home'],
           i18nConfig
         )),
       },
+      revalidate: 10,
     };
   }
 }
