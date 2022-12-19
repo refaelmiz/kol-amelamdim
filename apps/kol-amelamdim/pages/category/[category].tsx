@@ -155,6 +155,7 @@ export async function getStaticPaths(context) {
     context.locales.map((locale) => ({
       params: { category: category.URL },
       locale,
+      defaultLocale: 'he'
     }))
   ).flat();
 
@@ -178,7 +179,6 @@ export async function getStaticProps(context) {
         )),
       },
       revalidate: 10,
-      defaultLocale: 'he'
     };
   } catch (e) {
     return {
@@ -192,7 +192,6 @@ export async function getStaticProps(context) {
         )),
       },
       revalidate: 10,
-      defaultLocale: 'he'
     };
   }
 }
