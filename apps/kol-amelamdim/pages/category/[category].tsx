@@ -178,6 +178,7 @@ export async function getStaticProps(context) {
         )),
       },
       revalidate: 10,
+      defaultLocale: 'he'
     };
   } catch (e) {
     return {
@@ -191,6 +192,7 @@ export async function getStaticProps(context) {
         )),
       },
       revalidate: 10,
+      defaultLocale: 'he'
     };
   }
 }

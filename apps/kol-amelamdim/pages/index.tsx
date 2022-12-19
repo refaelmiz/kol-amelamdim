@@ -240,7 +240,6 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
         ...(await serverSideTranslations(locale, ['home'], i18nConfig)),
         activeArticle: JSON.parse(JSON.stringify(activeArticle)),
       },
-      revalidate: 10
     };
   } catch (e) {
     return {
@@ -248,7 +247,6 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
         ...(await serverSideTranslations(locale, ['home'], i18nConfig)),
         activeArticle: null,
       },
-      revalidate: 10
     };
   }
 }
