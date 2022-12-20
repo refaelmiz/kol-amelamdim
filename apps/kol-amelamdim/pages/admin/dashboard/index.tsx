@@ -44,6 +44,7 @@ export async function getStaticProps({ locale }) {
         i18nConfig
       )),
     },
+    revalidate: 10,
   };
 }
 

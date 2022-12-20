@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { i18n, useTranslation } from 'next-i18next';
-import { Category, Categories, IFile, CategoryObj } from '@kol-amelamdim/types';
+import { Category, IFile } from '@kol-amelamdim/types';
 import { StyledPageContainer } from '@kol-amelamdim/styled';
 import { FILE_TYPES_DICTIONARY } from '@kol-amelamdim/types';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
@@ -39,7 +39,6 @@ const CategoryPage = ({ files, error }) => {
   const { t } = useTranslation('category');
   const { category } = router.query;
   const { setAlertMessage, setAlertType } = useContext(AlertContext);
-  const displayedCategory = Categories.filter((cat) => cat.URL === category);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -80,7 +79,7 @@ const CategoryPage = ({ files, error }) => {
     <StyledPageContainer>
       <>
         <Typography variant="h3" component="h2" sx={{ mt: 2 }}>
-          {t(`${displayedCategory[0].URL}`)}
+          {t('mivhanim')}
         </Typography>
         <FilterCard
           setFileType={setFileType}
@@ -150,22 +149,10 @@ CategoryPage.getLayout = function getLayout(page: ReactElement) {
 
 export default CategoryPage;
 
-export async function getStaticPaths(context) {
-  const paths = Categories.map((category: CategoryObj) =>
-    context.locales.map((locale) => ({
-      params: { category: category.URL },
-      locale,
-    }))
-  ).flat();
-
-  return { paths, fallback: false };
-}
-
 export async function getStaticProps(context) {
   try {
-    const category = context.params.category;
     await connect();
-    const files = await File.find({ category, approved: true });
+    const files = await File.find({ category: 'mivhanim', approved: true });
 
     return {
       props: {
@@ -177,6 +164,7 @@ export async function getStaticProps(context) {
           i18nConfig
         )),
       },
+      revalidate: 10,
     };
   } catch (e) {
     return {
@@ -189,6 +177,7 @@ export async function getStaticProps(context) {
           i18nConfig
         )),
       },
+      revalidate: 10,
     };
   }
 }

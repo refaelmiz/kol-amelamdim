@@ -3,7 +3,7 @@ import { i18n } from 'next-i18next';
 
 export default function Document() {
   return (
-    <Html dir={i18n.language === 'he' ? 'rtl' : 'ltr'}>
+    <Html dir={i18n?.language === 'he' ? 'rtl' : 'ltr'}>
       <Head>
         <meta name="keywords" content="כל המלמדים, שיתוף חומרי לימוד, פרשת השבוע" />
         <title>כל המלמדים</title>
