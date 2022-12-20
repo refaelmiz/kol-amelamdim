@@ -11,9 +11,5 @@ const i18nConfig = {
     defaultLocale: 'he',
     localeDetection: false,
   },
-  fallbackLng: {
-    default: ['he'],
-  },
-  nonExplicitSupportedLngs: true,
 };
 module.exports = i18nConfig;

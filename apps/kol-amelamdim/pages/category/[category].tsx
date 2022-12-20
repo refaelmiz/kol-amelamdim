@@ -177,7 +177,6 @@ export async function getStaticProps(context) {
           i18nConfig
         )),
       },
-      revalidate: 10
     };
   } catch (e) {
     return {
@@ -190,7 +189,6 @@ export async function getStaticProps(context) {
           i18nConfig
         )),
       },
-      revalidate: 10
     };
   }
 }
