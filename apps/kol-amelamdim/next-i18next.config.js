@@ -12,5 +12,6 @@ const i18nConfig = {
     localeDetection: false,
     reloadOnPrerender: true
   },
+  reloadOnPrerender: true
 };
 module.exports = i18nConfig;
