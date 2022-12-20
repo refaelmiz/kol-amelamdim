@@ -10,6 +10,7 @@ const i18nConfig = {
     locales: ['he', 'en'],
     defaultLocale: 'he',
     localeDetection: false,
+    reloadOnPrerender: true
   },
 };
 module.exports = i18nConfig;
