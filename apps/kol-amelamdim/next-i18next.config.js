@@ -9,9 +9,7 @@ const i18nConfig = {
     localePath: path.resolve('./apps/kol-amelamdim/public/locales'),
     locales: ['he', 'en'],
     defaultLocale: 'he',
-    localeDetection: false,
-    reloadOnPrerender: true
+    localeDetection: true,
   },
-  reloadOnPrerender: true
 };
 module.exports = i18nConfig;
