@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { StyledPageContainer } from '@kol-amelamdim/styled';
 import { Typography, styled } from '@mui/material';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
@@ -6,6 +7,7 @@ import i18nConfig from '../../next-i18next.config';
 import { useTranslation } from 'next-i18next';
 import { WeeklyArticle } from '@kol-amelamdim/models';
 import connect from '../../db/connectMongo';
+import axios from 'axios';
 
 const WeeklyArticleContainer = styled(StyledPageContainer)`
   padding: 125px 0 70px;
@@ -19,8 +21,20 @@ const WeeklyArticleContainer = styled(StyledPageContainer)`
   }
 `;
 
-const Index = ({ activeArticle }) => {
+const getActiveWeeklyArticle = async () => {
+  return await axios.get('/api/get-active-weekly-article');
+};
+
+const Index = () => {
+  const [activeArticle, setActiveArticle] = useState<any>({});
   const { t } = useTranslation('weekly-article');
+
+  useEffect(() => {
+    (async () => {
+      const activeArticle = await getActiveWeeklyArticle();
+      setActiveArticle(activeArticle.data);
+    })();
+  }, []);
 
   if (activeArticle?.content && activeArticle?.title) {
     return (
@@ -53,13 +67,8 @@ const Index = ({ activeArticle }) => {
 
 export async function getStaticProps({ locale }) {
   try {
-    await connect();
-    const activeArticle = await WeeklyArticle.findOne({
-      isActiveArticle: true,
-    });
     return {
       props: {
-        activeArticle: JSON.parse(JSON.stringify(activeArticle)),
         ...(await serverSideTranslations(
           locale,
           ['weekly-article', 'home'],
