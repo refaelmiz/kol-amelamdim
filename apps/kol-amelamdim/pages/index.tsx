@@ -66,7 +66,7 @@ const getActiveWeeklyArticle = async () => {
 
 export function Home() {
   const [customerEmail, setCustomerEmail] = useState('');
-  const [activeArticle, setActiveArticle] = useState({});
+  const [activeArticle, setActiveArticle] = useState<any>({});
   const [customerQuestion, setCustomerQuestion] = useState('');
   const [formError, setFormError] = useState('');
   const [isUploadFileDialogOpen, setIsUploadFileDialogOpen] = useState(false);
@@ -158,13 +158,13 @@ export function Home() {
 
       <Divider sx={{ pt: 7, mb: 7 }} />
 
-      {activeArticle && (
+      {activeArticle?.title && activeArticle?.description && (
         <>
           <Grid container direction="column">
             <Typography variant="h3" component="h3">
-              {t('article-of-the-week-title')} {activeArticle?.title}
+              {t('article-of-the-week-title')} {activeArticle.title}
             </Typography>
-            <Typography>{activeArticle?.description}</Typography>
+            <Typography>{activeArticle.description}</Typography>
             <Button
               variant="text"
               sx={{
