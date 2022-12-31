@@ -8,7 +8,7 @@ import {
   TextField,
   useMediaQuery,
 } from '@mui/material';
-import { useState, ReactElement, useContext } from 'react';
+import { useState, ReactElement, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
 import { Categories } from '@kol-amelamdim/types';
@@ -60,8 +60,13 @@ const CategoryCard = styled(Card)`
   }
 `;
 
-export function Home({ activeArticle }) {
+const getActiveWeeklyArticle = async () => {
+  return await axios.get('/api/get-active-weekly-article');
+};
+
+export function Home() {
   const [customerEmail, setCustomerEmail] = useState('');
+  const [activeArticle, setActiveArticle] = useState({});
   const [customerQuestion, setCustomerQuestion] = useState('');
   const [formError, setFormError] = useState('');
   const [isUploadFileDialogOpen, setIsUploadFileDialogOpen] = useState(false);
@@ -72,6 +77,13 @@ export function Home({ activeArticle }) {
   const { t, i18n } = translation;
 
   const submitButtonStyles = { ml: isMobile ? 0 : 2, mt: isMobile ? 2 : 0 };
+
+  useEffect(() => {
+    (async () => {
+      const activeArticle = await getActiveWeeklyArticle();
+      setActiveArticle(activeArticle.data);
+    })();
+  }, []);
 
   const handleSendCustomerQuestion = async (e) => {
     e.preventDefault();
@@ -230,22 +242,15 @@ export function Home({ activeArticle }) {
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
   try {
-    await connect();
-    const activeArticle = await WeeklyArticle.findOne({
-      isActiveArticle: true,
-    });
-
     return {
       props: {
         ...(await serverSideTranslations(locale, ['home'], i18nConfig)),
-        activeArticle: JSON.parse(JSON.stringify(activeArticle)),
       },
     };
   } catch (e) {
     return {
       props: {
         ...(await serverSideTranslations(locale, ['home'], i18nConfig)),
-        activeArticle: null,
       },
     };
   }

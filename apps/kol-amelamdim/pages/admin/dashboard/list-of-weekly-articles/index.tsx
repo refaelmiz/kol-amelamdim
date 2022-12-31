@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useState } from 'react';
+import { ReactElement, useContext, useState, useEffect } from 'react';
 import axios from '../../../../api';
 import { useRouter } from 'next/router';
 import {
@@ -22,12 +22,19 @@ const getAllWeeklyArticles = async () => {
   return await axios.get('/api/admin/get-weekly-articles');
 };
 
-const ListOfWeeklyArticles = ({ weeklyArticles }) => {
-  const [articles, setArticles] = useState(weeklyArticles);
+const ListOfWeeklyArticles = () => {
+  const [articles, setArticles] = useState([]);
   const { setAlertMessage, setAlertType } = useContext(AlertContext);
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const router = useRouter();
   const { t } = useTranslation('list-of-weekly-article');
+
+  useEffect(() => {
+    (async () => {
+      const weeklyArticles = await getAllWeeklyArticles();
+      setArticles(weeklyArticles.data);
+    })();
+  }, []);
 
   const toggleActiveWeeklyArticle = async (id: string) => {
     try {
@@ -116,10 +123,8 @@ const ListOfWeeklyArticles = ({ weeklyArticles }) => {
 
 export async function getStaticProps({ locale }) {
   try {
-    const weeklyArticles = await getAllWeeklyArticles();
     return {
       props: {
-        weeklyArticles: weeklyArticles.data,
         ...(await serverSideTranslations(
           locale,
           ['list-of-weekly-article', 'home'],
