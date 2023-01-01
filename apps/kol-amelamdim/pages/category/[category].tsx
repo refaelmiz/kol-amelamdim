@@ -23,6 +23,7 @@ import { FilterCard } from '../../components/filter-card/FilterCard';
 import { UploadFileDialog } from '../../components';
 import { AlertContext } from '../../context/alert-context-provider';
 import { AlertLayout } from '../../layouts';
+import { AuthContext } from '../../context/auth-context-provider';
 import i18nConfig from '../../next-i18next.config';
 import connect from '../../db/connectMongo';
 import { File } from '@kol-amelamdim/models';
@@ -38,6 +39,7 @@ const CategoryPage = ({ files, error }) => {
   const router = useRouter();
   const { t } = useTranslation('category');
   const { category } = router.query;
+  const { isAuthenticated } = useContext(AuthContext);
   const { setAlertMessage, setAlertType } = useContext(AlertContext);
   const displayedCategory = Categories.filter((cat) => cat.URL === category);
 
@@ -111,7 +113,11 @@ const CategoryPage = ({ files, error }) => {
                       <TableCell>{row.size}</TableCell>
                       <TableCell>{row.type}</TableCell>
                       <TableCell>
-                        <Link href={row.URL}>{t('table-download-btn')}</Link>
+                        {isAuthenticated ? (
+                          <Link href={row.URL}>{t('table-download-btn')}</Link>
+                        ) : (
+                          'הרשמו או התחברו כדי להוריד קובץ זה'
+                        )}
                       </TableCell>
                     </TableRow>
                   );
