@@ -162,7 +162,7 @@ export function Home() {
         <>
           <Grid container direction="column">
             <Typography variant="h3" component="h3">
-              {t('article-of-the-week-title')} {activeArticle.title}
+              {activeArticle.title}
             </Typography>
             <Typography>{activeArticle.description}</Typography>
             <Button

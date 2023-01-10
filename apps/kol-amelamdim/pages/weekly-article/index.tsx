@@ -27,16 +27,27 @@ const getActiveWeeklyArticle = async () => {
 
 const Index = () => {
   const [activeArticle, setActiveArticle] = useState<any>({});
+  const [isLoading, setLoading] = useState(true);
   const { t } = useTranslation('weekly-article');
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       const activeArticle = await getActiveWeeklyArticle();
       setActiveArticle(activeArticle.data);
+      setLoading(false);
     })();
   }, []);
 
-  if (activeArticle?.content && activeArticle?.title) {
+  if (isLoading && !activeArticle?.title) {
+    return (
+      <WeeklyArticleContainer>
+        <Typography variant="h2" align="center">
+          מאמר בטעינה
+        </Typography>
+      </WeeklyArticleContainer>
+    );
+  } else if (activeArticle?.content && activeArticle?.title && !isLoading) {
     return (
       <WeeklyArticleContainer>
         <Typography variant="h1" component="h1">
@@ -51,7 +62,7 @@ const Index = () => {
         ></div>
       </WeeklyArticleContainer>
     );
-  } else {
+  } else if (!isLoading && !activeArticle?.title) {
     return (
       <WeeklyArticleContainer>
         <Typography variant="h2" align="center">
