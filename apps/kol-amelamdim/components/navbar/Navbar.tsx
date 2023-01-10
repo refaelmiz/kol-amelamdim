@@ -96,7 +96,7 @@ export const Navbar = () => {
           container
           xs={5}
           alignItems="center"
-          sx={{ position: 'relative' }}
+          sx={{ position: 'relative', cursor: 'pointer' }}
         >
           <Image
             src="/images/logo.svg"
