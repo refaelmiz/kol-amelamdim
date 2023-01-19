@@ -58,6 +58,7 @@ export default async function handler(req, res) {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: fileLocation,
         Body: contents,
+        contentType: mimetype,
         ACL: 'public-read',
       };
 
