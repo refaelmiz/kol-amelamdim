@@ -22,7 +22,6 @@ export default async function handler(req, res) {
       ? process.env.ACCESS_TOKEN_SECRET
       : process.env.ADMIN_TOKEN_SECRET;
     const { email } = jwt.verify(cookies.token || cookies.adminToken, secret);
-
     const user = await User.findOne({ email });
 
     const formData: any = await new Promise((resolve, reject) => {
@@ -62,6 +61,8 @@ export default async function handler(req, res) {
         ACL: 'public-read',
       };
 
+      const adminsEmails = ['chch4821@gmail.com', 'r0583227053@gmail.com'];
+
       const returnedData = s3
         .upload(params, (err, _) => {
           if (err) {
@@ -80,7 +81,7 @@ export default async function handler(req, res) {
             author: user?.fullName || 'לא ידוע',
             type: FILE_TYPES_DICTIONARY[fileType],
             URL: response.Location,
-            approved: false,
+            approved: adminsEmails.includes(email),
           });
 
           res.status(200).json({ isUploaded: true });
