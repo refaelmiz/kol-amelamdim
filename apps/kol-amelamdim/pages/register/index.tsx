@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import NextLink from 'next/link';
 import {
   TextField,
@@ -15,6 +15,7 @@ import validator from 'validator';
 import { StyledPageContainer, FormError } from '@kol-amelamdim/styled';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
 import axios from '../../api';
+import { Alert } from '../../components';
 import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from '../../next-i18next.config';
@@ -33,6 +34,7 @@ const Register = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
   const [termsDialogOpen, setTermsDialogOpen] = useState<boolean>(false);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const { t } = useTranslation('register');
 
@@ -50,8 +52,19 @@ const Register = () => {
             acceptedTerms,
           });
           if (data.success) {
-            await router.push('/');
-            setLoading(false);
+            setIsRegistered(true);
+            setTimeout(() => {
+              router.push('/');
+              setLoading(false);
+            }, 1500);
+            await axios.post(
+              'https://courses.kol-amelamdim.co.il/wp-json/uap/v2/uap-30216-30221',
+              {
+                fullName,
+                email,
+                phoneNumber,
+              }
+            );
           }
         } catch (error) {
           setLoading(false);
@@ -152,6 +165,14 @@ const Register = () => {
         isOpen={termsDialogOpen}
         onClose={() => setTermsDialogOpen(false)}
       />
+
+      <Alert
+        open={isRegistered}
+        severity="success"
+        onClose={() => setIsRegistered(false)}
+      >
+        נרשמת בהצלחה
+      </Alert>
     </StyledPageContainer>
   );
 };
