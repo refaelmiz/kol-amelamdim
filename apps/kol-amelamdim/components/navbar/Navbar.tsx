@@ -80,7 +80,7 @@ export const Navbar = () => {
             isOpenedOnce = true;
             setTimeout(() => {
               setOpen(true);
-            }, 1000);
+            }, 30000);
           }
         }
       })
