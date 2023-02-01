@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState, useRef } from 'react';
 import {
   AppBar,
   Button,
@@ -16,6 +16,7 @@ import axios from '../../api';
 import { AuthContext } from '../../context/auth-context-provider';
 import { AlertContext } from '../../context/alert-context-provider';
 import { AlertLayout } from '../../layouts';
+import { RegisterNow } from '../../components';
 
 const StyledNavbar = styled(AppBar)`
   background: ${(props) => props.theme.palette.primary.light};
@@ -46,7 +47,10 @@ const Actions = styled(Grid)`
   }
 `;
 
+let isOpenedOnce = false;
+
 export const Navbar = () => {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const { pathname, asPath, query } = router;
   const { t } = useTranslation('home');
@@ -67,6 +71,17 @@ export const Navbar = () => {
       .then((data) => {
         if (data.success) {
           setAuthenticated(true);
+        } else {
+          if (
+            !isOpenedOnce &&
+            !pathname.includes('register') &&
+            !pathname.includes('login')
+          ) {
+            isOpenedOnce = true;
+            setTimeout(() => {
+              setOpen(true);
+            }, 30000);
+          }
         }
       })
       .catch((error) => {
@@ -136,6 +151,7 @@ export const Navbar = () => {
           </StyledCountryDropDown>
         </Actions>
       </Grid>
+      <RegisterNow open={open} onClose={() => setOpen(false)} />
     </StyledNavbar>
   );
 };
