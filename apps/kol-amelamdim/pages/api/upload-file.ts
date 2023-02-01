@@ -52,7 +52,10 @@ export default async function handler(req, res) {
         secretAccessKey: process.env.S3_SECRET_KEY,
       });
 
-      const fileLocation = `${selectedCategory}/${formData.files.sharedFile.originalFilename}`;
+      const fileName = formData?.files?.sharedFile.originalFilename;
+      const extension = FILE_TYPES_DICTIONARY[fileType];
+      const finalFileName = `${fileName}.${extension}`;
+      const fileLocation = `${selectedCategory}/${finalFileName}`;
       const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: fileLocation,
@@ -61,7 +64,7 @@ export default async function handler(req, res) {
         ACL: 'public-read',
       };
 
-      const adminsEmails = ['chch4821@gmail.com', 'r0583227053@gmail.com'];
+      const adminsEmails = ['chch4821@gmail.com', 'r0583227053@gmail.com', 'emailofnetanel@gmail.com'];
 
       const returnedData = s3
         .upload(params, (err, _) => {
@@ -76,7 +79,7 @@ export default async function handler(req, res) {
           await File.create({
             key: uuidv4(),
             category: selectedCategory,
-            name: formData?.files?.sharedFile.originalFilename,
+            name: finalFileName,
             size: fileSize,
             author: user?.fullName || 'לא ידוע',
             type: FILE_TYPES_DICTIONARY[fileType],
