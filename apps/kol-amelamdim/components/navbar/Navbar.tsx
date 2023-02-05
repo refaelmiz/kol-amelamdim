@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState, useRef } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import {
   AppBar,
   Button,
@@ -114,7 +114,7 @@ export const Navbar = () => {
           sx={{ position: 'relative', cursor: 'pointer' }}
         >
           <Image
-            src="/images/logo.svg"
+            src="/images/logo-v3.svg"
             alt="logo"
             width={190}
             height={80}
