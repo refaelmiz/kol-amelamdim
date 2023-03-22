@@ -6,7 +6,7 @@ import {
   Divider,
   Card,
   TextField,
-  useMediaQuery,
+  useMediaQuery, Box,
 } from '@mui/material';
 import { useState, ReactElement, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -22,8 +22,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticPropsContext } from 'next';
 import i18nConfig from '../next-i18next.config';
 import { useTranslation } from 'next-i18next';
-import connect from '../db/connectMongo';
-import { WeeklyArticle } from '@kol-amelamdim/models';
+import Image from "next/image";
+import CourseRegisterDialog from "../components/course-register-dialog/CourseRegisterDialog";
 
 const CategoryCard = styled(Card)`
   height: 90px;
@@ -68,6 +68,7 @@ export function Home() {
   const [customerEmail, setCustomerEmail] = useState('');
   const [activeArticle, setActiveArticle] = useState<any>({});
   const [customerQuestion, setCustomerQuestion] = useState('');
+  const [isCourseDialogOpen, setCourseDialogOpen] = useState(false);
   const [formError, setFormError] = useState('');
   const [isUploadFileDialogOpen, setIsUploadFileDialogOpen] = useState(false);
   const { setAlertMessage, setAlertType } = useContext(AlertContext);
@@ -181,56 +182,88 @@ export function Home() {
         </>
       )}
 
-      <Grid container direction="column" sx={{ mb: 10 }}>
-        <Grid item>
-          <Typography variant="h3" component="h3">
-            {t('keep-in-touch-heading')}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography>{t('send-us-a-message')}</Typography>
+      <Grid container sx={{ mb: 10 }}>
+        <Grid item container direction="column" xs={6}>
+          <Grid item>
+            <Typography variant="h3" component="h3">
+              {t('keep-in-touch-heading')}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography>{t('send-us-a-message')}</Typography>
+          </Grid>
+
+          <form onSubmit={handleSendCustomerQuestion}>
+            <Grid item container sx={{ mt: 2 }} spacing={2} direction="column">
+              <Grid item xs={12}>
+                <TextField
+                  sx={{ width: isMobile ? '100%' : '450px' }}
+                  label={t('email-input-label')}
+                  value={customerEmail}
+                  error={!!formError}
+                  onChange={(e) => setCustomerEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                container
+                direction={isMobile ? 'column' : 'row'}
+                alignItems={isMobile ? 'flex-start' : 'flex-end'}
+              >
+                <TextField
+                  sx={{ width: isMobile ? '100%' : '450px' }}
+                  label={t('what-do-you-want-to-ask')}
+                  rows="4"
+                  multiline
+                  error={!!formError}
+                  value={customerQuestion}
+                  onChange={(e) => setCustomerQuestion(e.target.value)}
+                />
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  sx={submitButtonStyles}
+                  size="large"
+                  type="submit"
+                >
+                  {t('send-form-button-text')}
+                </Button>
+              </Grid>
+            </Grid>
+            {formError && <FormError>{formError}</FormError>}
+          </form>
         </Grid>
 
-        <form onSubmit={handleSendCustomerQuestion}>
-          <Grid item container sx={{ mt: 2 }} spacing={2} direction="column">
-            <Grid item xs={12}>
-              <TextField
-                sx={{ width: isMobile ? '100%' : '450px' }}
-                label={t('email-input-label')}
-                value={customerEmail}
-                error={!!formError}
-                onChange={(e) => setCustomerEmail(e.target.value)}
+        <Grid item container xs={6}>
+          <Grid item>
+            <Box style={{cursor: "pointer"}} onClick={() => setCourseDialogOpen(true)}>
+              <Image
+                src="/images/course.jpeg"
+                alt="course"
+                width={1000}
+                height={500}
               />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              container
-              direction={isMobile ? 'column' : 'row'}
-              alignItems={isMobile ? 'flex-start' : 'flex-end'}
-            >
-              <TextField
-                sx={{ width: isMobile ? '100%' : '450px' }}
-                label={t('what-do-you-want-to-ask')}
-                rows="4"
-                multiline
-                error={!!formError}
-                value={customerQuestion}
-                onChange={(e) => setCustomerQuestion(e.target.value)}
-              />
-              <Button
-                variant="contained"
-                sx={submitButtonStyles}
-                size="large"
-                type="submit"
-              >
-                {t('send-form-button-text')}
-              </Button>
-            </Grid>
+            </Box>
+            <Typography variant="h2">קיבלת הצעה להיות מלמד?</Typography>
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
+            <Typography variant="subtitle1">חושב שבקו"ח שלך אינך מצליח לתת דגשים על ההישגים שלך?</Typography>
+            <Typography variant="body1" sx={{mt: 4}}>קבל עכשיו במתנה את המדריך:</Typography>
+            <Typography variant="subtitle1">בידול עוצמתי בעולם ההוראה</Typography>
+
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
+            <Typography variant="body1">מדריך עם שיטה מוכחת לכתיבת קו"ח שמושכת את העין ומבליטה את הכישורים שלך במיוחד בעולם ההוראה והחינוך...</Typography>
+            <Button variant="text" sx={{p: 0, mt: 2}} onClick={() => setCourseDialogOpen(true)}>לקבלת המדריך במייל לחץ כאן</Button>
           </Grid>
-          {formError && <FormError>{formError}</FormError>}
-        </form>
+        </Grid>
       </Grid>
+
+
+      <CourseRegisterDialog
+        open={isCourseDialogOpen}
+        onClose={() => setCourseDialogOpen(false)}
+      />
 
       <UploadFileDialog
         isOpen={isUploadFileDialogOpen}
