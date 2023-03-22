@@ -77,6 +77,7 @@ export function Home() {
   const translation = useTranslation('home');
   const { t, i18n } = translation;
 
+
   const submitButtonStyles = { ml: isMobile ? 0 : 2, mt: isMobile ? 2 : 0 };
 
   useEffect(() => {
@@ -183,7 +184,7 @@ export function Home() {
       )}
 
       <Grid container sx={{ mb: 10 }}>
-        <Grid item container direction="column" xs={6}>
+        <Grid item container direction="column" xs={isMobile ? 12 : 6}>
           <Grid item>
             <Typography variant="h3" component="h3">
               {t('keep-in-touch-heading')}
@@ -236,7 +237,7 @@ export function Home() {
           </form>
         </Grid>
 
-        <Grid item container xs={6}>
+        <Grid item container xs={isMobile ? 12 : 6} sx={{mt: isMobile ? 8 : 0}}>
           <Grid item>
             <Box style={{cursor: "pointer"}} onClick={() => setCourseDialogOpen(true)}>
               <Image
