@@ -33,7 +33,7 @@ const CourseRegisterDialog = ({open, onClose}: CourseRegisterDialogProps) => {
     if (!isValidEmail) return;
 
     try {
-      await axios.post('https://courses.kol-amelamdim.co.il/wp-json/uap/v2/uap-30392-30393', formValues);
+      await axios.post('https://courses.kol-amelamdim.co.il/wp-json/uap/v2/uap-30395-30396', formValues);
       setIsFormSubmitted(true);
       setFormValues({
         email: "",

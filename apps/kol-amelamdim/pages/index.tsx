@@ -243,18 +243,18 @@ export function Home() {
               <Image
                 src="/images/course.jpeg"
                 alt="course"
-                width={1000}
+                width={900}
                 height={500}
               />
             </Box>
-            <Typography variant="h2">קיבלת הצעה להיות מלמד?</Typography>
+            <Typography variant="h3">קיבלת הצעה להיות מלמד?</Typography>
             {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <Typography variant="subtitle1">חושב שבקו"ח שלך אינך מצליח לתת דגשים על ההישגים שלך?</Typography>
-            <Typography variant="body1" sx={{mt: 4}}>קבל עכשיו במתנה את המדריך:</Typography>
-            <Typography variant="subtitle1">בידול עוצמתי בעולם ההוראה</Typography>
+            <Typography variant="subtitle2">חושב שבקו"ח שלך אינך מצליח לתת דגשים על ההישגים שלך?</Typography>
+            <Typography variant="body2" sx={{mt: 4}}>קבל עכשיו במתנה את המדריך:</Typography>
+            <Typography variant="subtitle2">בידול עוצמתי בעולם ההוראה</Typography>
 
             {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <Typography variant="body1">מדריך עם שיטה מוכחת לכתיבת קו"ח שמושכת את העין ומבליטה את הכישורים שלך במיוחד בעולם ההוראה והחינוך...</Typography>
+            <Typography variant="body2">מדריך עם שיטה מוכחת לכתיבת קו"ח שמושכת את העין ומבליטה את הכישורים שלך במיוחד בעולם ההוראה והחינוך...</Typography>
             <Button variant="text" sx={{p: 0, mt: 2}} onClick={() => setCourseDialogOpen(true)}>לקבלת המדריך במייל לחץ כאן</Button>
           </Grid>
         </Grid>
