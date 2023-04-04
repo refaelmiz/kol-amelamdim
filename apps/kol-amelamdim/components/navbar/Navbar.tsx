@@ -1,13 +1,5 @@
-import { useEffect, useContext, useState } from 'react';
-import {
-  AppBar,
-  Button,
-  Grid,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  styled,
-} from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
+import { AppBar, Button, Grid, IconButton, styled } from '@mui/material';
 import Image from 'next/image';
 import { i18n, useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -17,7 +9,11 @@ import { AuthContext } from '../../context/auth-context-provider';
 import { AlertContext } from '../../context/alert-context-provider';
 import { AlertLayout } from '../../layouts';
 import { RegisterNow } from '../../components';
-
+import IconEmail from '../../assets/icons/email';
+import IconWhatsapp from '../../assets/icons/whatsapp';
+import PersonIcon from '@mui/icons-material/Person';
+import EditIcon from '@mui/icons-material/Edit';
+import { StyledButton } from '@kol-amelamdim/styled';
 const StyledNavbar = styled(AppBar)`
   background: ${(props) => props.theme.palette.primary.light};
   height: 90px;
@@ -34,12 +30,23 @@ const StyledNavbar = styled(AppBar)`
   font-weight: ${(props) => props.theme.fonts.bold};
 `;
 
-const StyledCountryDropDown = styled(Select)`
-  & .MuiSelect-select.MuiSelect-outlined {
-    padding: 10px;
-    color: #356559;
-  }
-`;
+// const StyledCountryDropDown = styled(Select)`
+//   & .MuiSelect-select.MuiSelect-outlined {
+//     padding: 4px 50px 4px 20px;
+//     color: #356559;
+//     border-radius: 30px;
+//     border: 2px solid green;
+//     display: flex;
+//   },
+//
+//   &.MuiInputBase-root{
+//      border-radius: 30px !important;
+//   }
+//
+//   &input{
+//     display: none;
+//   }
+// `;
 
 const Actions = styled(Grid)`
   @media ${MOBILE_QUERY} {
@@ -59,12 +66,29 @@ export const Navbar = () => {
     useContext(AuthContext);
   const { setAlertMessage, setAlertType } = useContext(AlertContext);
 
-  const handleLanguageChange = async (event: SelectChangeEvent) => {
+  const toggleLanguage = async (e) => {
+    console.log(e.target);
+    const currentLanguage = i18n?.language || 'he';
+    const newLanguage = currentLanguage === 'he' ? 'en' : 'he';
     await router.push({ pathname, query }, asPath, {
-      locale: event.target.value,
+      locale: newLanguage,
     });
     router.reload();
   };
+
+  // const handleLanguageChange = async (event: SelectChangeEvent) => {
+  //   await router.push({pathname, query}, asPath, {
+  //     locale: event.target.value,
+  //   });
+  //   router.reload();
+  // };
+
+  /* const handleLanguageChange = async (event: SelectChangeEvent) => {
+     const currentLanguage = event.currentTarget.dataset.language || 'he'; // Получаем текущий язык приложения
+     const newLanguage = currentLanguage === 'he' ? 'en' : 'he'; // Определяем язык, на который нужно переключиться
+     i18n?.changeLanguage(newLanguage); // Меняем язык приложения
+     router.reload(); // Перезагружаем страницу
+   }*/
 
   useEffect(() => {
     checkAuthentication()
@@ -105,14 +129,55 @@ export const Navbar = () => {
 
   return (
     <StyledNavbar>
-      <Grid container>
-        <Grid
-          item
-          container
-          xs={5}
-          alignItems="center"
-          sx={{ position: 'relative', cursor: 'pointer' }}
-        >
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Grid container item xs={'auto'} spacing={2}>
+          <Actions item xs={'auto'}>
+            {isAuthenticated ? (
+              <StyledButton variant="text" onClick={logOut}>
+                {t('logout-btn')}
+              </StyledButton>
+            ) : (
+              <Grid container spacing={2}>
+                <Grid item>
+                  <StyledButton
+                    variant="contained"
+                    color="primary"
+                    startIcon={<PersonIcon />}
+                    onClick={() => router.push('/login')}
+                  >
+                    {t('login-btn')}
+                  </StyledButton>
+                </Grid>
+                <Grid item>
+                  <StyledButton
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<EditIcon />}
+                    onClick={() => router.push('/register')}
+                  >
+                    {t('register-btn')}
+                  </StyledButton>
+                </Grid>
+              </Grid>
+            )}
+          </Actions>
+          <Grid item>
+            <Button
+              variant="text"
+              data-language={i18n?.language || 'he'}
+              onClick={toggleLanguage}
+            >
+              {i18n?.language === 'he' ? 'English' : 'עברית'}
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={'auto'}>
           <Image
             src="/images/logo-v3.svg"
             alt="logo"
@@ -121,35 +186,27 @@ export const Navbar = () => {
             onClick={() => router.push('/')}
           />
         </Grid>
-        <Actions
-          item
-          container
-          xs={7}
-          alignItems="center"
-          justifyContent="flex-end"
-        >
-          {isAuthenticated ? (
-            <Button variant="text" onClick={logOut}>
-              {t('logout-btn')}
-            </Button>
-          ) : (
-            <div>
-              <Button variant="text" onClick={() => router.push('/login')}>
-                {t('login-btn')}
-              </Button>
-              <Button variant="text" onClick={() => router.push('/register')}>
-                {t('register-btn')}
-              </Button>
-            </div>
-          )}
-          <StyledCountryDropDown
-            value={i18n?.language || 'he'}
-            onChange={handleLanguageChange}
-          >
-            <MenuItem value={'he'}>עברית</MenuItem>
-            <MenuItem value={'en'}>English</MenuItem>
-          </StyledCountryDropDown>
-        </Actions>
+
+        <Grid container item xs={'auto'} alignItems="center">
+          {t('stay-in-touch')}
+
+          <Grid item ml={2}>
+            <IconButton
+              aria-label="whatsapp"
+              onClick={() => window.open('https://wa.me/+972583687427')}
+            >
+              <IconWhatsapp />
+            </IconButton>
+            <IconButton
+              aria-label="email"
+              onClick={() => {
+                window.location.href = 'mailto:kol.amelamdim@gmail.com';
+              }}
+            >
+              <IconEmail />
+            </IconButton>
+          </Grid>
+        </Grid>
       </Grid>
       <RegisterNow open={open} onClose={() => setOpen(false)} />
     </StyledNavbar>

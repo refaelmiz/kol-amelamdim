@@ -1,5 +1,14 @@
-import { Dialog as MuiDialog, Container, styled } from '@mui/material';
+import { Dialog as MuiDialog, Container, styled, Button } from '@mui/material';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
+
+export const StyledButton = styled(Button)`
+  border-radius: 30px;
+  padding: 2px 30px 6px 20px;
+  color: white;
+  & .MuiButton-startIcon svg {
+    font-size: 30px;
+  }
+`;
 
 export const Dialog = styled(MuiDialog)`
   .MuiPaper-root {
