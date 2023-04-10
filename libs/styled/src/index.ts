@@ -40,14 +40,17 @@ export const Dialog = styled(MuiDialog)`
 `;
 
 export const FormError = styled('div')`
-  margin: 10px 0;
-  color: ${(props) => props.theme.palette.error.main};
+  margin: 30px 0 0;
+  padding: 10px;
+  color: white;
+  border: 1px dashed white;
+  background: ${(props) => props.theme.palette.error.main + '80'};
 `;
 
 export const StyledPageContainer = styled(Container)`
   min-height: 90vh;
   max-width: 100% !important;
-  padding: 8em 0 !important;
+  padding: 8em 0 0 !important;
   @media ${MOBILE_QUERY} {
     padding: 3em 0 !important;
   }

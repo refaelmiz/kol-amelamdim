@@ -204,6 +204,7 @@ export function Home() {
               <Typography variant="h2">קיבלת הצעה להיות מלמד?</Typography>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
               <Typography variant="body2">
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 חושב שבקו"ח שלך אינך מצליח לתת דגשים על ההישגים שלך?
               </Typography>
               <Typography variant="body1" sx={{ mt: 4 }}>
@@ -213,6 +214,7 @@ export function Home() {
 
               {/* eslint-disable-next-line react/no-unescaped-entities */}
               <Typography variant="body1">
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 מדריך עם שיטה מוכחת לכתיבת קו"ח שמושכת את העין ומבליטה את
                 הכישורים שלך במיוחד בעולם ההוראה והחינוך...
               </Typography>
@@ -227,6 +229,50 @@ export function Home() {
             </Grid>
           </Grid>
         </Grid>
+
+        {/* באנר הנאה לפעולה */}
+        {activeArticle?.title && activeArticle?.description && (
+          <>
+            <Grid
+              container
+              direction="row"
+              alignItems={'center'}
+              justifyContent={'center'}
+              sx={{
+                background: 'url(/images/bg-wall.webp)',
+                height: '300px',
+                gap: '3em',
+                color: 'white',
+                borderBottom: `8px solid #D48245`,
+              }}
+            >
+              <Grid item>
+                <Typography variant="h3" component="h3">
+                  מלמדים ואנשי חינוך יקרים
+                  {activeArticle.title}
+                </Typography>
+                <Typography>
+                  הסבר קצרצר על דרכי השימוש במערכת
+                  {activeArticle.description}
+                </Typography>
+              </Grid>
+              <StyledButtonXL
+                variant="contained"
+                color="secondary"
+                sx={
+                  {
+                    // padding: 0,
+                    // justifyContent: 'flex-start',
+                    // mt: 0,
+                  }
+                }
+                onClick={() => router.push('/weekly-article')}
+              >
+                {t('continue-reading-button')}
+              </StyledButtonXL>
+            </Grid>
+          </>
+        )}
 
         {/* חומרים להורדה */}
         <Grid
@@ -270,55 +316,12 @@ export function Home() {
           </Grid>
         </Grid>
 
-        {/* באנר הנאה לפעולה */}
-        {activeArticle?.title && activeArticle?.description && (
-          <>
-            <Grid
-              container
-              direction="row"
-              alignItems={'center'}
-              justifyContent={'center'}
-              sx={{
-                background: 'url(/images/bg-wall.webp)',
-                height: '300px',
-                gap: '3em',
-                color: 'white',
-              }}
-            >
-              <Grid item>
-                <Typography variant="h3" component="h3">
-                  מלמדים ואנשי חינוך יקרים
-                  {activeArticle.title}
-                </Typography>
-                <Typography>
-                  הסבר קצרצר על דרכי השימוש במערכת
-                  {activeArticle.description}
-                </Typography>
-              </Grid>
-              <StyledButtonXL
-                variant="contained"
-                color="secondary"
-                sx={
-                  {
-                    // padding: 0,
-                    // justifyContent: 'flex-start',
-                    // mt: 0,
-                  }
-                }
-                onClick={() => router.push('/weekly-article')}
-              >
-                {t('continue-reading-button')}
-              </StyledButtonXL>
-            </Grid>
-            <Divider sx={{ pt: 7, mb: 7 }} />
-          </>
-        )}
-
         {/* רכיב יצירת קשר */}
         <Grid
           container
           style={{
             backgroundImage: 'url("/images/form-bg.webp")',
+            backgroundSize: 'cover',
             color: 'white',
             textAlign: 'center',
             padding: isMobile ? '4em 2em' : '6em 4em',

@@ -1,9 +1,9 @@
-import { styled, Typography, Grid } from '@mui/material';
-import { EmailIcon, WhatsappIcon } from 'react-share';
+import { Box, Grid, IconButton, styled, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
+import IconWhatsapp from '../../assets/icons/whatsapp';
+import IconEmail from '../../assets/icons/email';
 
 const StyledFooter = styled('footer')`
-  min-height: 150px;
   background: #e4e3e3;
   padding: 24px;
   position: relative;
@@ -18,8 +18,18 @@ export const Footer = () => {
   const { t } = translation;
   return (
     <StyledFooter>
-      <Rights align="center">{t('rights')}</Rights>
-      <Typography align="center" sx={{ mt: 2, mb: 2 }}>
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={10}
+        pr={'1em'}
+        pl={'1em'}
+      >
+        <Grid item xs={'auto'}>
+          <Rights align="center">{t('rights')}</Rights>
+        </Grid>
+        {/*  <Typography align="center" sx={{ mt: 2, mb: 2 }}>
         {t('contact')}
       </Typography>
       <Grid container justifyContent="center" spacing={4}>
@@ -36,6 +46,29 @@ export const Footer = () => {
               window.location.href = 'mailto:kol.amelamdim@gmail.com';
             }}
           />
+        </Grid>
+      </Grid> */}
+        <Grid container item xs={'auto'} alignItems="center">
+          <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
+            {t('stay-in-touch')}
+          </Box>
+
+          <Grid item ml={2}>
+            <IconButton
+              aria-label="whatsapp"
+              onClick={() => window.open('https://wa.me/+972583687427')}
+            >
+              <IconWhatsapp />
+            </IconButton>
+            <IconButton
+              aria-label="email"
+              onClick={() => {
+                window.location.href = 'mailto:kol.amelamdim@gmail.com';
+              }}
+            >
+              <IconEmail />
+            </IconButton>
+          </Grid>
         </Grid>
       </Grid>
     </StyledFooter>
