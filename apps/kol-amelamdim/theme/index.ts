@@ -1,5 +1,5 @@
 import { ThemeOptions } from '@mui/material/styles';
-import { heIL, enUS } from '@mui/material/locale';
+import { enUS, heIL } from '@mui/material/locale';
 
 type Fonts = {
   regular: string;
@@ -12,6 +12,7 @@ declare module '@mui/material/styles' {
   interface Theme {
     fonts?: Fonts;
   }
+
   interface ThemeOptions {
     // eslint-disable-next-line @typescript-eslint/ban-types
     fonts?: Fonts;
@@ -31,7 +32,7 @@ const defaultTheme = {
   palette: {
     primary: {
       main: '#356559',
-      dark: '#4a4a4a',
+      dark: '#2c544a',
       light: '#FEFDFD',
     },
     secondary: {
@@ -50,7 +51,7 @@ const defaultTheme = {
         body: {
           backgroundColor: themeParam.palette.primary.light,
           fontSize: '22px',
-          color: '#4a4a4a',
+          color: '#000',
           fontFamily: themeParam.fonts.regular,
         },
       }),

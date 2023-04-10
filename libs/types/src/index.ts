@@ -17,6 +17,7 @@ export type CategoryObj = {
   URL: CategoriesUrl;
   en: string;
   he: string;
+  icon: string;
 };
 
 export const Categories: CategoryObj[] = [
@@ -24,26 +25,31 @@ export const Categories: CategoryObj[] = [
     URL: 'parashat_shavoa',
     en: 'Parashat shavoa',
     he: 'פרשת השבוע',
+    icon: '/images/icon-parashat-shavua.svg',
   },
   {
     URL: 'learning_materials',
     en: 'Learning materials',
     he: 'חומרי לימוד',
+    icon: '/images/icon-homrey-limud.svg',
   },
   {
     URL: 'mivhanim',
     en: 'Mivhanim',
     he: 'מבחנים',
+    icon: '/images/icon-mivhanim.svg',
   },
   {
     URL: 'art_and_activities',
     en: 'Art and activities',
     he: 'דפי יצירה ופעילות',
+    icon: '/images/icon-dapey-ezira.svg',
   },
   {
     URL: 'shonot',
     en: 'Shonot',
     he: 'שונות',
+    icon: '/images/icon-shonot.svg',
   },
 ];
 

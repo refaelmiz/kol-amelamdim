@@ -1,18 +1,24 @@
 import {
-  styled,
-  Typography,
   Button,
-  Grid,
-  Divider,
   Card,
+  CardActionArea,
+  Divider,
+  Grid,
+  styled,
   TextField,
-  useMediaQuery, Box,
+  Typography,
+  useMediaQuery,
 } from '@mui/material';
-import { useState, ReactElement, useContext, useEffect } from 'react';
+import { ReactElement, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
 import { Categories } from '@kol-amelamdim/types';
-import { StyledPageContainer, FormError } from '@kol-amelamdim/styled';
+import {
+  FormError,
+  SectionTitle,
+  StyledButtonXL,
+  StyledPageContainer,
+} from '@kol-amelamdim/styled';
 import { UploadFileDialog } from '../components';
 import { AlertLayout } from '../layouts';
 import validator from 'validator';
@@ -22,42 +28,55 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticPropsContext } from 'next';
 import i18nConfig from '../next-i18next.config';
 import { useTranslation } from 'next-i18next';
-import Image from "next/image";
-import CourseRegisterDialog from "../components/course-register-dialog/CourseRegisterDialog";
+import Image from 'next/image';
+import CourseRegisterDialog from '../components/course-register-dialog/CourseRegisterDialog';
+import StyledTextField from '../components/text-field/StyledTextField';
 
 const CategoryCard = styled(Card)`
-  height: 90px;
-  text-align: center;
-  min-width: 200px;
-
-  @media ${MOBILE_QUERY} {
-    min-width: auto;
-  }
-
-  padding: 8px;
-  margin-right: 8px;
-  margin-bottom: 8px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: 14px;
   align-items: center;
   cursor: pointer;
+  color: black;
   font-family: ${(props) => props.theme.fonts.bold};
-  color: ${(props) => props.theme.palette.primary.light};
-  background: ${(props) => props.theme.palette.primary.main};
-  background: -webkit-linear-gradient(
-    to right,
-    ${(props) => props.theme.palette.secondary.main},
-    ${(props) => props.theme.palette.primary.main}
-  );
-  background: linear-gradient(
-    to right,
-    ${(props) => props.theme.palette.secondary.main},
-    ${(props) => props.theme.palette.primary.main}
-  );
+  min-width: 340px;
+  text-align: center;
+  background: white;
+  padding: 2em;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   transition: transform 0.6s;
-  &:hover {
-    transform: scale(1.03);
-  }
+  border-radius: 20px;
+
+  // @media ${MOBILE_QUERY} {
+  //   min-width: auto;
+  // }
+
+  //
+  //&:hover {
+  //  transform: scale(1.03);
+  //}
+`;
+
+const SyledCardActionArea = styled(CardActionArea)`
+  border-radius: 20px;
+`;
+
+const Hero = styled('div')`
+  height: 482px;
+  width: 100%;
+  margin-top: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: url('/images/bg-1.jpg');
+  background-size: cover;
+  color: white;
+  position: relative;
+  padding: 2em;
+  text-align: center;
 `;
 
 const getActiveWeeklyArticle = async () => {
@@ -77,8 +96,7 @@ export function Home() {
   const translation = useTranslation('home');
   const { t, i18n } = translation;
 
-
-  const submitButtonStyles = { ml: isMobile ? 0 : 2, mt: isMobile ? 2 : 0 };
+  const submitButtonStyles = { width: '100%' };
 
   useEffect(() => {
     (async () => {
@@ -114,163 +132,281 @@ export function Home() {
   };
 
   return (
-    <StyledPageContainer>
-      <Typography variant="h1" component="h1">
-        {t('h1')}
-      </Typography>
-      <Typography variant="h3" component="h2" sx={{ mt: 2 }}>
-        {t('h2')}
-      </Typography>
-      <Grid container sx={{ mt: 3 }}>
-        <Grid item sx={{ mr: '10px' }}>
-          <Button
-            size="large"
-            variant="contained"
-            onClick={() => setIsUploadFileDialogOpen(true)}
-          >
-            {t('share-btn')}
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            size="large"
-            variant="outlined"
-            onClick={() => router.push('/#learn-categories')}
-          >
-            {t('download-btn')}
-          </Button>
-        </Grid>
-      </Grid>
-
-      <Divider sx={{ pt: 7, mb: 7 }} id="learn-categories" />
-
-      <Grid>
-        <Grid container sx={{ mt: 2 }}>
-          {Categories.map((category) => (
-            <Grid key={category.URL} item xs={6}>
-              <CategoryCard
-                onClick={() => router.push(`/category/${category.URL}`)}
-              >
-                {category[i18n.language]}
-              </CategoryCard>
-            </Grid>
-          ))}
-        </Grid>
-      </Grid>
-
-      <Divider sx={{ pt: 7, mb: 7 }} />
-
-      {activeArticle?.title && activeArticle?.description && (
-        <>
-          <Grid container direction="column">
-            <Typography variant="h3" component="h3">
-              {activeArticle.title}
-            </Typography>
-            <Typography>{activeArticle.description}</Typography>
-            <Button
-              variant="text"
-              sx={{
-                padding: 0,
-                justifyContent: 'flex-start',
-                mt: 0,
-              }}
-              onClick={() => router.push('/weekly-article')}
+    <>
+      {/* hero */}
+      <Hero>
+        <Typography variant="h1" component="h1">
+          {t('h1')}
+        </Typography>
+        <Typography variant="h3" component="h2" sx={{ mt: 2 }}>
+          {t('h2')}
+        </Typography>
+        <Grid
+          container
+          justifyContent={'center'}
+          gap={3}
+          mt={8}
+          sx={{ position: 'absolute', bottom: '-20px' }}
+        >
+          <Grid item>
+            <StyledButtonXL
+              size="large"
+              variant="contained"
+              color="secondary"
+              onClick={() => setIsUploadFileDialogOpen(true)}
             >
-              {t('continue-reading-button')}
-            </Button>
-          </Grid>
-          <Divider sx={{ pt: 7, mb: 7 }} />
-        </>
-      )}
-
-      <Grid container sx={{ mb: 10 }}>
-        <Grid item container direction="column" xs={isMobile ? 12 : 6}>
-          <Grid item>
-            <Typography variant="h3" component="h3">
-              {t('keep-in-touch-heading')}
-            </Typography>
+              {t('share-btn')}
+            </StyledButtonXL>
           </Grid>
           <Grid item>
-            <Typography>{t('send-us-a-message')}</Typography>
+            <StyledButtonXL
+              size="large"
+              variant="contained"
+              onClick={() => router.push('/#learn-categories')}
+            >
+              {t('download-btn')}
+            </StyledButtonXL>
           </Grid>
+        </Grid>
+      </Hero>
 
-          <form onSubmit={handleSendCustomerQuestion}>
-            <Grid item container sx={{ mt: 2 }} spacing={2} direction="column">
-              <Grid item xs={12}>
-                <TextField
-                  sx={{ width: isMobile ? '100%' : '450px' }}
-                  label={t('email-input-label')}
-                  value={customerEmail}
-                  error={!!formError}
-                  onChange={(e) => setCustomerEmail(e.target.value)}
-                />
+      <StyledPageContainer>
+        {/* הצעה להיות מלמד */}
+        {/*<Grid item container xs={isMobile ? 12 : 6} sx={{mt: isMobile ? 8 : 0}}>*/}
+        <Grid
+          item
+          container
+          sx={{ maxWidth: '1600px', padding: isMobile ? '1em' : '3em' }}
+        >
+          <Grid container spacing={6} direction={'row-reverse'}>
+            {/*תמונה*/}
+            <Grid
+              item
+              xs={12}
+              lg={6}
+              style={{
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+              onClick={() => setCourseDialogOpen(true)}
+            >
+              <Image
+                src="/images/course.webp"
+                alt="course"
+                width={777}
+                height={398}
+                objectFit={'contain'}
+              />
+            </Grid>
+            {/*טקסטים*/}
+            <Grid item xs={12} lg={6} sx={{ textAlign: 'center' }}>
+              <Typography variant="h2">קיבלת הצעה להיות מלמד?</Typography>
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
+              <Typography variant="body2">
+                חושב שבקו"ח שלך אינך מצליח לתת דגשים על ההישגים שלך?
+              </Typography>
+              <Typography variant="body1" sx={{ mt: 4 }}>
+                קבל עכשיו במתנה את המדריך:
+              </Typography>
+              <Typography variant="h3">בידול עוצמתי בעולם ההוראה</Typography>
+
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
+              <Typography variant="body1">
+                מדריך עם שיטה מוכחת לכתיבת קו"ח שמושכת את העין ומבליטה את
+                הכישורים שלך במיוחד בעולם ההוראה והחינוך...
+              </Typography>
+              <StyledButtonXL
+                variant="contained"
+                color="secondary"
+                onClick={() => setCourseDialogOpen(true)}
+                sx={{ mt: 5 }}
+              >
+                לקבלת המדריך במייל לחץ כאן
+              </StyledButtonXL>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        {/* חומרים להורדה */}
+        <Grid
+          item
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            maxWidth: '1200px',
+          }}
+        >
+          <SectionTitle variant="h2">חומרים להורדה</SectionTitle>
+          <Grid
+            container
+            item
+            alignItems="center"
+            justifyContent="center"
+            sx={{ gap: '40px' }}
+          >
+            {Categories.map((category) => (
+              <Grid container key={category.URL} xs={'auto'}>
+                <SyledCardActionArea
+                  onClick={() => router.push(`/category/${category.URL}`)}
+                >
+                  <CategoryCard>
+                    <Image
+                      src={category.icon}
+                      alt="logo"
+                      width={190}
+                      height={80}
+                    />
+                    <Typography variant={'h3'} sx={{ fontSize: '2em' }}>
+                      {category[i18n.language]}
+                    </Typography>
+                  </CategoryCard>
+                </SyledCardActionArea>
               </Grid>
+            ))}
+          </Grid>
+        </Grid>
+
+        {/* באנר הנאה לפעולה */}
+        {activeArticle?.title && activeArticle?.description && (
+          <>
+            <Grid
+              container
+              direction="row"
+              alignItems={'center'}
+              justifyContent={'center'}
+              sx={{
+                background: 'url(/images/bg-wall.webp)',
+                height: '300px',
+                gap: '3em',
+                color: 'white',
+              }}
+            >
+              <Grid item>
+                <Typography variant="h3" component="h3">
+                  מלמדים ואנשי חינוך יקרים
+                  {activeArticle.title}
+                </Typography>
+                <Typography>
+                  הסבר קצרצר על דרכי השימוש במערכת
+                  {activeArticle.description}
+                </Typography>
+              </Grid>
+              <StyledButtonXL
+                variant="contained"
+                color="secondary"
+                sx={
+                  {
+                    // padding: 0,
+                    // justifyContent: 'flex-start',
+                    // mt: 0,
+                  }
+                }
+                onClick={() => router.push('/weekly-article')}
+              >
+                {t('continue-reading-button')}
+              </StyledButtonXL>
+            </Grid>
+            <Divider sx={{ pt: 7, mb: 7 }} />
+          </>
+        )}
+
+        {/* רכיב יצירת קשר */}
+        <Grid
+          container
+          style={{
+            backgroundImage: 'url("/images/form-bg.webp")',
+            color: 'white',
+            textAlign: 'center',
+            padding: isMobile ? '4em 2em' : '6em 4em',
+          }}
+        >
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item>
+              <Typography variant="h3" component="h3">
+                {t('keep-in-touch-heading')}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography>{t('send-us-a-message')}</Typography>
+            </Grid>
+
+            <form
+              onSubmit={handleSendCustomerQuestion}
+              style={{ maxWidth: '500px', width: '100%' }}
+            >
               <Grid
                 item
-                xs={12}
                 container
-                direction={isMobile ? 'column' : 'row'}
-                alignItems={isMobile ? 'flex-start' : 'flex-end'}
+                sx={{ mt: 2 }}
+                spacing={2}
+                direction="column"
               >
-                <TextField
-                  sx={{ width: isMobile ? '100%' : '450px' }}
-                  label={t('what-do-you-want-to-ask')}
-                  rows="4"
-                  multiline
-                  error={!!formError}
-                  value={customerQuestion}
-                  onChange={(e) => setCustomerQuestion(e.target.value)}
-                />
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="contained"
-                  sx={submitButtonStyles}
-                  size="large"
-                  type="submit"
+                <Grid item xs={12}>
+                  <StyledTextField
+                    placeholder={t('email-input-label')}
+                    value={customerEmail}
+                    error={!!formError}
+                    onChange={(e) => setCustomerEmail(e.target.value)}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  container
+                  direction={isMobile ? 'column' : 'row'}
+                  alignItems={isMobile ? 'flex-start' : 'flex-end'}
                 >
-                  {t('send-form-button-text')}
-                </Button>
+                  <StyledTextField
+                    placeholder={t('what-do-you-want-to-ask')}
+                    rows="4"
+                    multiline
+                    error={!!formError}
+                    value={customerQuestion}
+                    onChange={(e) => setCustomerQuestion(e.target.value)}
+                    InputProps={{
+                      style: {
+                        borderRadius: '10px',
+                        background: 'white',
+                      },
+                    }}
+                  />
+                </Grid>
+                <Grid item>
+                  <StyledButtonXL
+                    variant="contained"
+                    color="secondary"
+                    sx={submitButtonStyles}
+                    type="submit"
+                  >
+                    {t('send-form-button-text')}
+                  </StyledButtonXL>
+                </Grid>
               </Grid>
-            </Grid>
-            {formError && <FormError>{formError}</FormError>}
-          </form>
-        </Grid>
-
-        <Grid item container xs={isMobile ? 12 : 6} sx={{mt: isMobile ? 8 : 0}}>
-          <Grid item>
-            <Box style={{cursor: "pointer"}} onClick={() => setCourseDialogOpen(true)}>
-              <Image
-                src="/images/course.jpeg"
-                alt="course"
-                width={900}
-                height={500}
-              />
-            </Box>
-            <Typography variant="h3">קיבלת הצעה להיות מלמד?</Typography>
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <Typography variant="subtitle2">חושב שבקו"ח שלך אינך מצליח לתת דגשים על ההישגים שלך?</Typography>
-            <Typography variant="body2" sx={{mt: 4}}>קבל עכשיו במתנה את המדריך:</Typography>
-            <Typography variant="subtitle2">בידול עוצמתי בעולם ההוראה</Typography>
-
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <Typography variant="body2">מדריך עם שיטה מוכחת לכתיבת קו"ח שמושכת את העין ומבליטה את הכישורים שלך במיוחד בעולם ההוראה והחינוך...</Typography>
-            <Button variant="text" sx={{p: 0, mt: 2}} onClick={() => setCourseDialogOpen(true)}>לקבלת המדריך במייל לחץ כאן</Button>
+              {formError && <FormError>{formError}</FormError>}
+            </form>
           </Grid>
         </Grid>
-      </Grid>
 
+        <CourseRegisterDialog
+          open={isCourseDialogOpen}
+          onClose={() => setCourseDialogOpen(false)}
+        />
 
-      <CourseRegisterDialog
-        open={isCourseDialogOpen}
-        onClose={() => setCourseDialogOpen(false)}
-      />
-
-      <UploadFileDialog
-        isOpen={isUploadFileDialogOpen}
-        onClose={() => setIsUploadFileDialogOpen(false)}
-      />
-    </StyledPageContainer>
+        <UploadFileDialog
+          isOpen={isUploadFileDialogOpen}
+          onClose={() => setIsUploadFileDialogOpen(false)}
+        />
+      </StyledPageContainer>
+    </>
   );
 }
 

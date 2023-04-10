@@ -1,13 +1,27 @@
-import { Dialog as MuiDialog, Container, styled, Button } from '@mui/material';
+import {
+  Dialog as MuiDialog,
+  Container,
+  styled,
+  Button,
+  Typography,
+} from '@mui/material';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
 
 export const StyledButton = styled(Button)`
-  border-radius: 30px;
+  border-radius: 100px;
   padding: 2px 30px 6px 20px;
   color: white;
+  font-size: 1.2rem;
   & .MuiButton-startIcon svg {
-    font-size: 30px;
+    font-size: 26px;
   }
+`;
+
+export const StyledButtonXL = styled(StyledButton)`
+  font-weight: bold;
+  font-size: 30px;
+  letter-spacing: 2px;
+  padding: 6px 40px 10px;
 `;
 
 export const Dialog = styled(MuiDialog)`
@@ -31,10 +45,26 @@ export const FormError = styled('div')`
 `;
 
 export const StyledPageContainer = styled(Container)`
-  padding-top: 105px;
   min-height: 90vh;
-  padding-bottom: 50px;
+  max-width: 100% !important;
+  padding: 8em 0 !important;
   @media ${MOBILE_QUERY} {
-    padding-top: 110px;
+    padding: 3em 0 !important;
   }
+  gap: 10em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // @media ${MOBILE_QUERY} {
+  //   padding-top: 110px;
+  // }
+`;
+
+export const SectionTitle = styled(Typography)`
+  text-align: center;
+  border-bottom: 6px solid ${(props) => props.theme.palette.secondary.main};
+  width: fit-content;
+  margin-bottom: 1em;
+  padding: 0 6px;
 `;

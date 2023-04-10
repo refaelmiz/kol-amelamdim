@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { AppBar, Button, Grid, IconButton, styled } from '@mui/material';
+import { AppBar, Box, Button, Grid, IconButton, styled } from '@mui/material';
 import Image from 'next/image';
 import { i18n, useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -188,7 +188,9 @@ export const Navbar = () => {
         </Grid>
 
         <Grid container item xs={'auto'} alignItems="center">
-          {t('stay-in-touch')}
+          <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
+            {t('stay-in-touch')}
+          </Box>
 
           <Grid item ml={2}>
             <IconButton
