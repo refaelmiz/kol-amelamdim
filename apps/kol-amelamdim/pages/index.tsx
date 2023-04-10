@@ -204,6 +204,7 @@ export function Home() {
               <Typography variant="h2">קיבלת הצעה להיות מלמד?</Typography>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
               <Typography variant="body2">
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 חושב שבקו"ח שלך אינך מצליח לתת דגשים על ההישגים שלך?
               </Typography>
               <Typography variant="body1" sx={{ mt: 4 }}>
@@ -213,6 +214,7 @@ export function Home() {
 
               {/* eslint-disable-next-line react/no-unescaped-entities */}
               <Typography variant="body1">
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 מדריך עם שיטה מוכחת לכתיבת קו"ח שמושכת את העין ומבליטה את
                 הכישורים שלך במיוחד בעולם ההוראה והחינוך...
               </Typography>
