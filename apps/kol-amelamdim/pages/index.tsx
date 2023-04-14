@@ -315,6 +315,7 @@ export function Home() {
           container
           style={{
             backgroundImage: 'url("/images/form-bg.webp")',
+            backgroundSize: 'cover',
             color: 'white',
             textAlign: 'center',
             padding: isMobile ? '4em 2em' : '6em 4em',
