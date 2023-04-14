@@ -230,6 +230,44 @@ export function Home() {
           </Grid>
         </Grid>
 
+        {/* באנר הנאה לפעולה */}
+        {activeArticle?.title && activeArticle?.description && (
+          <>
+            <Grid
+              container
+              direction="row"
+              alignItems={'center'}
+              justifyContent={'center'}
+              sx={{
+                background: 'url(/images/bg-wall.webp)',
+                height: { md: '300px' },
+                gap: { md: '3em', xs: '1em' },
+                color: 'white',
+                paddingTop: { xs: '3em' },
+                paddingBottom: { xs: '3em' },
+              }}
+            >
+              <Grid item>
+                <Typography variant="h3" component="h3" align="center">
+                  מלמדים ואנשי חינוך יקרים
+                  {activeArticle.title}
+                </Typography>
+                <Typography align="center">
+                  הסבר קצרצר על דרכי השימוש במערכת
+                  {activeArticle.description}
+                </Typography>
+              </Grid>
+              <StyledButtonXL
+                variant="contained"
+                color="secondary"
+                onClick={() => router.push('/weekly-article')}
+              >
+                {t('continue-reading-button')}
+              </StyledButtonXL>
+            </Grid>
+          </>
+        )}
+
         {/* חומרים להורדה */}
         <Grid
           item
@@ -271,50 +309,6 @@ export function Home() {
             ))}
           </Grid>
         </Grid>
-
-        {/* באנר הנאה לפעולה */}
-        {activeArticle?.title && activeArticle?.description && (
-          <>
-            <Grid
-              container
-              direction="row"
-              alignItems={'center'}
-              justifyContent={'center'}
-              sx={{
-                background: 'url(/images/bg-wall.webp)',
-                height: '300px',
-                gap: '3em',
-                color: 'white',
-              }}
-            >
-              <Grid item>
-                <Typography variant="h3" component="h3">
-                  מלמדים ואנשי חינוך יקרים
-                  {activeArticle.title}
-                </Typography>
-                <Typography>
-                  הסבר קצרצר על דרכי השימוש במערכת
-                  {activeArticle.description}
-                </Typography>
-              </Grid>
-              <StyledButtonXL
-                variant="contained"
-                color="secondary"
-                sx={
-                  {
-                    // padding: 0,
-                    // justifyContent: 'flex-start',
-                    // mt: 0,
-                  }
-                }
-                onClick={() => router.push('/weekly-article')}
-              >
-                {t('continue-reading-button')}
-              </StyledButtonXL>
-            </Grid>
-            <Divider sx={{ pt: 7, mb: 7 }} />
-          </>
-        )}
 
         {/* רכיב יצירת קשר */}
         <Grid

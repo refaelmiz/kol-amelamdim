@@ -56,7 +56,7 @@ export const FormError = styled('div')`
 export const StyledPageContainer = styled(Container)`
   min-height: 90vh;
   max-width: 100% !important;
-  padding: 8em 0 !important;
+  padding: 8em 0 0 !important;
   @media ${MOBILE_QUERY} {
     padding: 3em 0 0 !important;
   }

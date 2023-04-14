@@ -37,7 +37,7 @@ const Register = () => {
   const [isRegistered, setIsRegistered] = useState(false);
 
   const { t } = useTranslation('register');
-  console.log('test');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validator.isEmail(email)) {
