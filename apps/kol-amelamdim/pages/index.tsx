@@ -240,18 +240,19 @@ export function Home() {
               justifyContent={'center'}
               sx={{
                 background: 'url(/images/bg-wall.webp)',
-                height: '300px',
-                gap: '3em',
+                height: { md: '300px' },
+                gap: { md: '3em', xs: '1em' },
                 color: 'white',
-                borderBottom: `8px solid #D48245`,
+                paddingTop: { xs: '3em' },
+                paddingBottom: { xs: '3em' },
               }}
             >
               <Grid item>
-                <Typography variant="h3" component="h3">
+                <Typography variant="h3" component="h3" align="center">
                   מלמדים ואנשי חינוך יקרים
                   {activeArticle.title}
                 </Typography>
-                <Typography>
+                <Typography align="center">
                   הסבר קצרצר על דרכי השימוש במערכת
                   {activeArticle.description}
                 </Typography>
@@ -259,13 +260,6 @@ export function Home() {
               <StyledButtonXL
                 variant="contained"
                 color="secondary"
-                sx={
-                  {
-                    // padding: 0,
-                    // justifyContent: 'flex-start',
-                    // mt: 0,
-                  }
-                }
                 onClick={() => router.push('/weekly-article')}
               >
                 {t('continue-reading-button')}
@@ -325,6 +319,7 @@ export function Home() {
             color: 'white',
             textAlign: 'center',
             padding: isMobile ? '4em 2em' : '6em 4em',
+            backgroundSize: 'cover',
           }}
         >
           <Grid
