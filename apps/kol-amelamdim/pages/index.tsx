@@ -318,6 +318,7 @@ export function Home() {
             color: 'white',
             textAlign: 'center',
             padding: isMobile ? '4em 2em' : '6em 4em',
+            backgroundSize: 'cover',
           }}
         >
           <Grid
