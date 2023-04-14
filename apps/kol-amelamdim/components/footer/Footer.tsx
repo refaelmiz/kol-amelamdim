@@ -1,16 +1,15 @@
-import { styled, Typography, Grid } from '@mui/material';
-import { EmailIcon, WhatsappIcon } from 'react-share';
+import { Grid, styled, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
+import ContactUsButtons from '../contact-us-buttons/ContactUsButtons';
 
 const StyledFooter = styled('footer')`
-  min-height: 150px;
-  background: #e4e3e3;
+  background: white;
   padding: 24px;
   position: relative;
-`;
 
-const Rights = styled(Typography)`
-  font-weight: bold;
+  .title {
+    display: block;
+  }
 `;
 
 export const Footer = () => {
@@ -18,25 +17,19 @@ export const Footer = () => {
   const { t } = translation;
   return (
     <StyledFooter>
-      <Rights align="center">{t('rights')}</Rights>
-      <Typography align="center" sx={{ mt: 2, mb: 2 }}>
-        {t('contact')}
-      </Typography>
-      <Grid container justifyContent="center" spacing={4}>
-        <Grid item>
-          <WhatsappIcon
-            round
-            onClick={() => window.open('https://wa.me/+972583687427')}
-          />
+      <Grid
+        container
+        direction={{ xs: 'column-reverse', md: 'row' }}
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={2}
+        pr={'1em'}
+        pl={'1em'}
+      >
+        <Grid item xs={'auto'}>
+          <Typography align="center">{t('rights')}</Typography>
         </Grid>
-        <Grid item>
-          <EmailIcon
-            round
-            onClick={() => {
-              window.location.href = 'mailto:kol.amelamdim@gmail.com';
-            }}
-          />
-        </Grid>
+        <ContactUsButtons className="title" />
       </Grid>
     </StyledFooter>
   );

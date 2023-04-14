@@ -17,6 +17,15 @@ export const StyledButton = styled(Button)`
   }
 `;
 
+export const StyledLangButton = styled(StyledButton)`
+  color: black;
+  padding: 2px 20px 6px 20px;
+  gap: 10px;
+  @media ${!MOBILE_QUERY} {
+    border-color: transparent;
+  }
+`;
+
 export const StyledButtonXL = styled(StyledButton)`
   font-weight: bold;
   font-size: 30px;
@@ -49,7 +58,7 @@ export const StyledPageContainer = styled(Container)`
   max-width: 100% !important;
   padding: 8em 0 !important;
   @media ${MOBILE_QUERY} {
-    padding: 3em 0 !important;
+    padding: 3em 0 0 !important;
   }
   gap: 10em;
   display: flex;

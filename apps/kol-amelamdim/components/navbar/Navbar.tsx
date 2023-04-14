@@ -1,19 +1,21 @@
 import { useContext, useEffect, useState } from 'react';
-import { AppBar, Box, Button, Grid, IconButton, styled } from '@mui/material';
+import { AppBar, Button, Grid, styled, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import { i18n, useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { MOBILE_QUERY } from '@kol-amelamdim/constants';
+import { MOBILE_QUERY, TABLET_QUERY } from '@kol-amelamdim/constants';
 import axios from '../../api';
 import { AuthContext } from '../../context/auth-context-provider';
 import { AlertContext } from '../../context/alert-context-provider';
 import { AlertLayout } from '../../layouts';
 import { RegisterNow } from '../../components';
-import IconEmail from '../../assets/icons/email';
-import IconWhatsapp from '../../assets/icons/whatsapp';
 import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from '@mui/icons-material/Edit';
-import { StyledButton } from '@kol-amelamdim/styled';
+import { StyledButton, StyledLangButton } from '@kol-amelamdim/styled';
+import MobileMenu from '../mobile-menu/MobileMenu';
+import ContactUsButtons from '../contact-us-buttons/ContactUsButtons';
+import Box from '@mui/material/Box';
+
 const StyledNavbar = styled(AppBar)`
   background: ${(props) => props.theme.palette.primary.light};
   height: 90px;
@@ -22,7 +24,7 @@ const StyledNavbar = styled(AppBar)`
   flex-direction: row;
   padding: 0 60px;
 
-  @media ${MOBILE_QUERY} {
+  @media ${TABLET_QUERY} {
     padding: 0 10px;
   }
 
@@ -30,25 +32,7 @@ const StyledNavbar = styled(AppBar)`
   font-weight: ${(props) => props.theme.fonts.bold};
 `;
 
-// const StyledCountryDropDown = styled(Select)`
-//   & .MuiSelect-select.MuiSelect-outlined {
-//     padding: 4px 50px 4px 20px;
-//     color: #356559;
-//     border-radius: 30px;
-//     border: 2px solid green;
-//     display: flex;
-//   },
-//
-//   &.MuiInputBase-root{
-//      border-radius: 30px !important;
-//   }
-//
-//   &input{
-//     display: none;
-//   }
-// `;
-
-const Actions = styled(Grid)`
+export const Actions = styled(Grid)`
   @media ${MOBILE_QUERY} {
     flex-wrap: wrap-reverse;
   }
@@ -58,9 +42,11 @@ let isOpenedOnce = false;
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
   const { pathname, asPath, query } = router;
   const { t } = useTranslation('home');
+  const isTablet = useMediaQuery(TABLET_QUERY);
 
   const { isAuthenticated, setAuthenticated, checkAuthentication } =
     useContext(AuthContext);
@@ -75,20 +61,6 @@ export const Navbar = () => {
     });
     router.reload();
   };
-
-  // const handleLanguageChange = async (event: SelectChangeEvent) => {
-  //   await router.push({pathname, query}, asPath, {
-  //     locale: event.target.value,
-  //   });
-  //   router.reload();
-  // };
-
-  /* const handleLanguageChange = async (event: SelectChangeEvent) => {
-     const currentLanguage = event.currentTarget.dataset.language || 'he'; // Получаем текущий язык приложения
-     const newLanguage = currentLanguage === 'he' ? 'en' : 'he'; // Определяем язык, на который нужно переключиться
-     i18n?.changeLanguage(newLanguage); // Меняем язык приложения
-     router.reload(); // Перезагружаем страницу
-   }*/
 
   useEffect(() => {
     checkAuthentication()
@@ -135,7 +107,14 @@ export const Navbar = () => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Grid container item xs={'auto'} spacing={2}>
+        {/*desktop*/}
+        <Grid
+          container
+          item
+          xs={'auto'}
+          spacing={2}
+          sx={{ display: { xs: 'none', lg: 'flex' } }}
+        >
           <Actions item xs={'auto'}>
             {isAuthenticated ? (
               <StyledButton variant="text" onClick={logOut}>
@@ -167,48 +146,46 @@ export const Navbar = () => {
             )}
           </Actions>
           <Grid item>
-            <Button
-              variant="text"
+            <StyledLangButton
+              variant="outlined"
               data-language={i18n?.language || 'he'}
               onClick={toggleLanguage}
             >
               {i18n?.language === 'he' ? 'English' : 'עברית'}
-            </Button>
+              {i18n?.language === 'he' ? (
+                <img src="/images/flags/GB.svg" width="20" alt="English flag" />
+              ) : (
+                <img src="/images/flags/IL.svg" width="20" alt="Hebrew flag" />
+              )}
+            </StyledLangButton>
           </Grid>
         </Grid>
 
-        <Grid item xs={'auto'}>
-          <Image
-            src="/images/logo-v3.svg"
-            alt="logo"
-            width={190}
-            height={80}
-            onClick={() => router.push('/')}
+        {/*mobile*/}
+        <Grid item xs={'auto'} sx={{ display: { lg: 'none', xs: 'flex' } }}>
+          <MobileMenu
+            isAuthenticated={isAuthenticated}
+            logOut={logOut}
+            router={router}
+            toggleLanguage={toggleLanguage}
           />
         </Grid>
 
-        <Grid container item xs={'auto'} alignItems="center">
-          <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
-            {t('stay-in-touch')}
-          </Box>
-
-          <Grid item ml={2}>
-            <IconButton
-              aria-label="whatsapp"
-              onClick={() => window.open('https://wa.me/+972583687427')}
-            >
-              <IconWhatsapp />
-            </IconButton>
-            <IconButton
-              aria-label="email"
-              onClick={() => {
-                window.location.href = 'mailto:kol.amelamdim@gmail.com';
-              }}
-            >
-              <IconEmail />
-            </IconButton>
-          </Grid>
-        </Grid>
+        <Box
+          sx={{
+            position: 'absolute',
+            right: '50%',
+            transform: 'translateX(50%)',
+          }}
+        >
+          <img
+            src="/images/logo-v3.svg"
+            alt="logo"
+            onClick={() => router.push('/')}
+            style={{ width: isTablet ? '100px' : '140px' }}
+          />
+        </Box>
+        <ContactUsButtons />
       </Grid>
       <RegisterNow open={open} onClose={() => setOpen(false)} />
     </StyledNavbar>
