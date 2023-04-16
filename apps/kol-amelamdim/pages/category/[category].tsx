@@ -1,5 +1,6 @@
 import { ReactElement, useContext, useEffect, useState } from 'react';
 import {
+  Box,
   Grid,
   Link,
   Paper,
@@ -163,7 +164,17 @@ const CategoryPage = ({ files, error }) => {
                               {t('table-download-btn')}
                             </Link>
                           ) : (
-                            'הרשמו או התחברו כדי להוריד קובץ זה'
+                            <Box>
+                              <Link onClick={() => router.push('/register')}>
+                                הרשמו
+                              </Link>
+                              <span>או</span>
+                              <Link onClick={() => router.push('/login')}>
+                                התחברו
+                              </Link>
+
+                              <span>כדי להוריד קובץ זה</span>
+                            </Box>
                           )}
                         </TableCell>
                       </TableRow>

@@ -35,6 +35,7 @@ export const Filter = ({
           <Grid container item xs={6} md={2} alignItems="center">
             <StyledButtonXL
               variant="contained"
+              color="secondary"
               onClick={onClick}
               sx={{
                 px: '50px',
