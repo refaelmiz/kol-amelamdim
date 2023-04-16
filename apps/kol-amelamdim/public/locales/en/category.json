@@ -1,5 +1,6 @@
 {
   "parashat_shavoa": "Weekly Torah portion",
+  "description": "You can filter the contents by entering a keyword in the search field\nAfter entering the keyword, click on the \"Filter\" button",
   "learning_materials": "Learning materials",
   "mivhanim": "Exams",
   "art_and_activities": "Art and activities",

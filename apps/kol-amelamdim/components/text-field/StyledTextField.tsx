@@ -2,9 +2,6 @@ import React from 'react';
 import { styled, TextField } from '@mui/material';
 
 const StyledField = styled(TextField)`
-  font-size: 1.4rem;
-  background: white;
-  border-radius: 30px;
   width: 100%;
 `;
 
@@ -24,6 +21,9 @@ const StyledTextField = (props) => {
           fontSize: '1.4rem',
         },
       }}
+      label={props.label}
+      name={props.name}
+      required={props.required}
     >
       {props.children}
     </StyledField>

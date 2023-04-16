@@ -1,25 +1,32 @@
-import { useEffect, useState, useContext, ReactElement } from 'react';
+import { ReactElement, useContext, useEffect, useState } from 'react';
 import {
-  Table,
+  Box,
+  Grid,
+  Link as MUILink,
+  Link,
+  Paper,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
-  Paper,
   TablePagination,
-  Link,
-  Button,
+  TableRow,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { i18n, useTranslation } from 'next-i18next';
-import { Category, Categories, IFile, CategoryObj } from '@kol-amelamdim/types';
-import { StyledPageContainer } from '@kol-amelamdim/styled';
-import { FILE_TYPES_DICTIONARY } from '@kol-amelamdim/types';
+import {
+  Categories,
+  Category,
+  CategoryObj,
+  FILE_TYPES_DICTIONARY,
+  IFile,
+} from '@kol-amelamdim/types';
+import { StyledButtonXL, StyledPageContainer } from '@kol-amelamdim/styled';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { FilterCard } from '../../components/filter-card/FilterCard';
+import { Filter } from '../../components/filter-card/Filter';
 import { UploadFileDialog } from '../../components';
 import { AlertContext } from '../../context/alert-context-provider';
 import { AlertLayout } from '../../layouts';
@@ -27,6 +34,9 @@ import { AuthContext } from '../../context/auth-context-provider';
 import i18nConfig from '../../next-i18next.config';
 import connect from '../../db/connectMongo';
 import { File } from '@kol-amelamdim/models';
+import StyledTable from '../../components/table/StyledTable';
+import { MOBILE_QUERY } from '@kol-amelamdim/constants';
+import NextLink from 'next/link';
 
 const rowsPerPage = 25;
 
@@ -78,53 +88,115 @@ const CategoryPage = ({ files, error }) => {
     }
   }, [error, setAlertType, setAlertMessage]);
 
+  const isMobile = useMediaQuery(MOBILE_QUERY);
+
   return (
-    <StyledPageContainer>
-      <>
-        <Typography variant="h3" component="h2" sx={{ mt: 2 }}>
-          {t(`${displayedCategory[0].URL}`)}
-        </Typography>
-        <FilterCard
-          setFileType={setFileType}
-          fileType={fileType}
-          filterText={filterText}
-          setFilterText={setFilterText}
-          onClick={handleFilter}
-        />
-        <TableContainer component={Paper} sx={{ maxHeight: 400, mt: '20px' }}>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell>{t('table-column-name')}</TableCell>
-                <TableCell>{t('table-column-author')}</TableCell>
-                <TableCell>{t('table-column-file-size')}</TableCell>
-                <TableCell>{t('table-column-file-type')}</TableCell>
-                <TableCell>{t('table-column-file-download')}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredFiles
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow key={row.key}>
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell>{row.author}</TableCell>
-                      <TableCell>{row.size}</TableCell>
-                      <TableCell>{row.type}</TableCell>
-                      <TableCell>
-                        {isAuthenticated ? (
-                          <Link href={row.URL}>{t('table-download-btn')}</Link>
-                        ) : (
-                          'הרשמו או התחברו כדי להוריד קובץ זה'
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+    <StyledPageContainer
+      sx={{
+        backgroundImage: 'url("/images/full-page-bg.jpg")',
+        backgroundSize: 'cover',
+        repeat: 'none',
+        color: 'white',
+        gap: '2em',
+        justifyContent: isMobile ? 'start' : '',
+      }}
+    >
+      <Grid
+        container
+        justifyContent={'center'}
+        xs={12}
+        md={10}
+        sx={{
+          backgroundColor: (theme) => theme.palette.grey[100],
+          p: isMobile ? '1em' : '1em 2em 3em',
+          borderRadius: '10px',
+          color: 'black',
+        }}
+      >
+        <Grid textAlign="center" maxWidth="600px">
+          <Typography
+            variant="h2"
+            component="h1"
+            sx={{ mt: isMobile ? '2em' : '20px' }}
+          >
+            {t(`${displayedCategory[0].URL}`)}
+          </Typography>
+          <Typography>{t('description')}</Typography>
+        </Grid>
+        <Grid item xs={11} md={10}>
+          <Filter
+            setFileType={setFileType}
+            fileType={fileType}
+            filterText={filterText}
+            setFilterText={setFilterText}
+            onClick={handleFilter}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TableContainer component={Paper} sx={{ maxHeight: 400, mt: '20px' }}>
+            <StyledTable stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ minWidth: '370px' }}>
+                    {t('table-column-name')}
+                  </TableCell>
+                  <TableCell style={{ minWidth: '120px' }}>
+                    {t('table-column-author')}
+                  </TableCell>
+                  <TableCell style={{ minWidth: '120px' }}>
+                    {t('table-column-file-size')}
+                  </TableCell>
+                  <TableCell style={{ minWidth: '120px' }}>
+                    {t('table-column-file-type')}
+                  </TableCell>
+                  <TableCell style={{ minWidth: '400px' }}>
+                    {t('table-column-file-download')}
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filteredFiles
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow key={row.key}>
+                        <TableCell>{row.name}</TableCell>
+                        <TableCell>{row.author}</TableCell>
+                        <TableCell>{row.size}</TableCell>
+                        <TableCell>{row.type}</TableCell>
+                        <TableCell>
+                          {isAuthenticated ? (
+                            <Link href={row.URL}>
+                              {t('table-download-btn')}
+                            </Link>
+                          ) : (
+                            <Box>
+                              <NextLink href="/register" passHref>
+                                <MUILink sx={{ fontWeight: 'regular' }}>
+                                  הרשמו
+                                </MUILink>
+                              </NextLink>
+
+                              <span style={{ margin: '0 10px' }}>או</span>
+
+                              <NextLink href="/login" passHref>
+                                <MUILink>התחברו</MUILink>
+                              </NextLink>
+
+                              <span style={{ margin: '0 10px' }}>
+                                כדי להוריד קובץ זה
+                              </span>
+                            </Box>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </StyledTable>
+          </TableContainer>
+        </Grid>
+
         <TablePagination
           component="div"
           rowsPerPageOptions={[]}
@@ -133,12 +205,7 @@ const CategoryPage = ({ files, error }) => {
           page={page}
           onPageChange={handleChangePage}
         />
-        <Button
-          variant="contained"
-          onClick={() => setIsUploadFileDialogOpen(true)}
-        >
-          {t('share-btn')}
-        </Button>
+
         {isUploadFileDialogOpen && (
           <UploadFileDialog
             isOpen={isUploadFileDialogOpen}
@@ -146,7 +213,16 @@ const CategoryPage = ({ files, error }) => {
             defaultCategory={category as Category}
           />
         )}
-      </>
+      </Grid>
+
+      <Grid item mb={6}>
+        <StyledButtonXL
+          variant="contained"
+          onClick={() => setIsUploadFileDialogOpen(true)}
+        >
+          {t('share-btn')}
+        </StyledButtonXL>
+      </Grid>
     </StyledPageContainer>
   );
 };
@@ -171,7 +247,9 @@ export async function getStaticProps(context) {
   try {
     const category = context.params.category;
     await connect();
-    const files = await File.find({ category, approved: true }).sort({ _id: -1 });
+    const files = await File.find({ category, approved: true }).sort({
+      _id: -1,
+    });
 
     return {
       props: {

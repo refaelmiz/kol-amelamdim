@@ -1,18 +1,15 @@
 import { useState } from 'react';
 import NextLink from 'next/link';
-import {
-  TextField,
-  Button,
-  Grid,
-  Typography,
-  Link as MUILink,
-  Checkbox,
-  FormControlLabel,
-  Link,
-} from '@mui/material';
+import { FormControlLabel, Grid, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import validator from 'validator';
-import { StyledPageContainer, FormError } from '@kol-amelamdim/styled';
+import {
+  FormError,
+  StyledButtonXL,
+  StyledCheckbox,
+  StyledMUILink,
+  StyledPageContainer,
+} from '@kol-amelamdim/styled';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
 import axios from '../../api';
 import { Alert } from '../../components';
@@ -20,6 +17,7 @@ import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from '../../next-i18next.config';
 import TermsDialog from '../../components/terms-dialog/TermsDialog';
+import StyledTextField from '../../components/text-field/StyledTextField';
 
 const phoneNumberPattern =
   /^(?:(?:(\+?972|\(\+?972\)|\+?\(972\))(?:\s|\.|-)?([1-9]\d?))|(0[23489]{1})|(0[57]{1}[0-9]))(?:\s|\.|-)?([^0\D]{1}\d{2}(?:\s|\.|-)?\d{4})$/;
@@ -81,86 +79,137 @@ const Register = () => {
   };
 
   return (
-    <StyledPageContainer>
-      <>
-        <form onSubmit={handleSubmit}>
-          <Grid container direction={'column'}>
-            <Typography variant="h3" component="h2" sx={{ mt: 2 }}>
-              {t('h1')}
-            </Typography>
-            <TextField
-              sx={{ mt: 2 }}
-              required
-              id="outlined-required"
-              label={t('fullName')}
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              error={!!error}
-            />
-            <TextField
-              sx={{ mt: 2 }}
-              required
-              id="outlined-required"
-              label={t('phone-number')}
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              error={!!error}
-            />
-            <TextField
-              sx={{ mt: 2 }}
-              required
-              id="outlined-required"
-              label={t('email')}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={!!error}
-            />
-            <TextField
-              sx={{ mt: 2 }}
-              value={password}
-              label={t('password')}
-              type="password"
-              required
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-              error={!!error}
-            />
-            <Grid container alignItems="center">
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    required
-                    onChange={(e) => setAcceptedTerms(e.target.checked)}
-                    name="acceptTerms"
-                  />
-                }
-                label={t('approve-terms')}
-              />
-              <Link
-                sx={{ cursor: 'pointer' }}
-                onClick={() => setTermsDialogOpen(true)}
+    <StyledPageContainer
+      sx={{
+        backgroundImage: 'url("/images/full-page-bg.jpg")',
+        backgroundSize: 'cover',
+        repeat: 'none',
+        color: 'white',
+      }}
+    >
+      <Grid
+        container
+        direction={'column'}
+        justifyContent={'center'}
+        xs={10}
+        md={6}
+        lg={4}
+        pb={8}
+      >
+        <Grid item>
+          <form onSubmit={handleSubmit}>
+            <Grid container direction={'column'}>
+              <Typography
+                variant="h3"
+                component="h2"
+                sx={{ mt: 2 }}
+                textAlign={'center'}
               >
-                {t('approve-terms-link')}
-              </Link>
+                {t('h1')}
+              </Typography>
+
+              <Typography variant={'body1'} textAlign={'center'} sx={{ mb: 8 }}>
+                {t('description')}
+              </Typography>
+
+              <Grid container spacing={4}>
+                <Grid item xs={12}>
+                  <StyledTextField
+                    sx={{ mt: 2 }}
+                    required
+                    id="outlined-required"
+                    placeholder={t('fullName')}
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    error={!!error}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <StyledTextField
+                    sx={{ mt: 2 }}
+                    required
+                    id="outlined-required"
+                    placeholder={t('phone-number')}
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    error={!!error}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <StyledTextField
+                    sx={{ mt: 2 }}
+                    required
+                    id="outlined-required"
+                    placeholder={t('email')}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    error={!!error}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <StyledTextField
+                    sx={{ mt: 2 }}
+                    value={password}
+                    placeholder={t('password')}
+                    type="password"
+                    required
+                    autoComplete="current-password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    error={!!error}
+                  />
+                </Grid>
+                <Grid
+                  container
+                  item
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <FormControlLabel
+                    control={
+                      <StyledCheckbox
+                        required
+                        onChange={(e) => setAcceptedTerms(e.target.checked)}
+                        name="acceptTerms"
+                      />
+                    }
+                    label={t('approve-terms')}
+                  />
+                  <StyledMUILink
+                    sx={{ cursor: 'pointer' }}
+                    role={'button'}
+                    tabIndex={0}
+                    onClick={() => setTermsDialogOpen(true)}
+                  >
+                    {t('approve-terms-link')}
+                  </StyledMUILink>
+                </Grid>
+              </Grid>
+              <StyledButtonXL
+                sx={{ mt: 4 }}
+                variant="contained"
+                color={'secondary'}
+                type="submit"
+                disabled={!email || !password || loading || !acceptedTerms}
+              >
+                {loading ? <>רק רגע..</> : t('submit')}
+              </StyledButtonXL>
             </Grid>
-            <Button
-              sx={{ mt: 2 }}
-              variant="contained"
-              type="submit"
-              disabled={!email || !password || loading || !acceptedTerms}
-            >
-              {loading ? <>רק רגע..</> : t('submit')}
-            </Button>
-          </Grid>
-        </form>
-        <Grid container sx={{ mt: 2 }}>
-          <Typography component="h4">{t('login-txt')}&nbsp;</Typography>
+          </form>
+        </Grid>
+        <Grid
+          item
+          container
+          direction={'row'}
+          justifyContent={'center'}
+          sx={{ mt: 8 }}
+        >
+          <Typography>{t('login-txt')}&nbsp;</Typography>
           <NextLink href="/login" passHref>
-            <MUILink>{t('login-btn')}</MUILink>
+            <StyledMUILink>{t('login-btn')}</StyledMUILink>
           </NextLink>
         </Grid>
         {error && <FormError>{error}</FormError>}
-      </>
+      </Grid>
       <TermsDialog
         isOpen={termsDialogOpen}
         onClose={() => setTermsDialogOpen(false)}

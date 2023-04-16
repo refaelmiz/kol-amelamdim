@@ -1,5 +1,6 @@
 {
   "h1": "Register",
+  "description": "Register to get access to the best deals and offers",
   "email": "Email",
   "password": "Password",
   "fullName": "Full name",

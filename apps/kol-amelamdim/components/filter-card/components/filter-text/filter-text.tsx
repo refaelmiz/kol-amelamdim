@@ -1,8 +1,9 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import { useMediaQuery } from '@mui/material';
+import { styled, useMediaQuery } from '@mui/material';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
 import { useTranslation } from 'next-i18next';
+import StyledTextField from '../../../text-field/StyledTextField';
 
 interface FilterTextProps {
   filterText: string;
@@ -14,14 +15,10 @@ export const FilterText = ({ filterText, setFilterText }: FilterTextProps) => {
   const { t } = useTranslation('category');
 
   return (
-    <TextField
-      label={t('search')}
+    <StyledTextField
+      placeholder={t('search')}
       value={filterText}
       onChange={(e) => setFilterText(e.target.value)}
-      sx={{
-        mr: isMobile ? '10px' : '20px',
-        width: isMobile ? '105px' : '200px',
-      }}
     />
   );
 };

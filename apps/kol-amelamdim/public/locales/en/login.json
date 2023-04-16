@@ -1,5 +1,6 @@
 {
   "h1": "Login",
+  "description": "Please enter your credentials to login",
   "email": "email",
   "password": "Password",
   "submit": "Submit",
