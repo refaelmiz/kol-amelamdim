@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import { useContext, useState } from 'react';
-import { Grid, Link as MUILink, Typography } from '@mui/material';
+import { Grid, Link as MUILink, styled, Typography } from '@mui/material';
 import validator from 'validator';
 import {
   FormError,
   StyledButtonXL,
+  StyledMUILink,
   StyledPageContainer,
 } from '@kol-amelamdim/styled';
 import { i18n, useTranslation } from 'next-i18next';
@@ -50,13 +51,22 @@ const Login = () => {
   };
   //Todo: handle loading and errors
   return (
-    <StyledPageContainer>
+    <StyledPageContainer
+      sx={{
+        backgroundImage: 'url("/images/full-page-bg.jpg")',
+        backgroundSize: 'cover',
+        repeat: 'none',
+        color: 'white',
+      }}
+    >
       <Grid
         container
         direction={'column'}
         justifyContent={'center'}
         xs={10}
         md={6}
+        lg={4}
+        pb={8}
       >
         <Grid item>
           <form onSubmit={handleSubmit}>
@@ -64,17 +74,20 @@ const Login = () => {
               <Typography
                 variant="h3"
                 component="h1"
-                sx={{ mt: 2, mb: 8 }}
+                sx={{ mt: 2 }}
                 textAlign={'center'}
               >
                 {t('h1')}
               </Typography>
-              <Grid container spacing={3}>
+              <Typography variant={'body1'} textAlign={'center'} sx={{ mb: 8 }}>
+                {t('description')}
+              </Typography>
+              <Grid container spacing={4}>
                 <Grid item xs={12}>
                   <StyledTextField
                     required
                     id="outlined-required"
-                    label={t('email')}
+                    placeholder={t('email')}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     error={!!error}
@@ -83,7 +96,7 @@ const Login = () => {
                 <Grid item xs={12}>
                   <StyledTextField
                     value={password}
-                    label={t('password')}
+                    placeholder={t('password')}
                     type="password"
                     required
                     autoComplete="current-password"
@@ -93,7 +106,7 @@ const Login = () => {
                 </Grid>
               </Grid>
               <StyledButtonXL
-                sx={{ mt: 2 }}
+                sx={{ mt: 4 }}
                 variant="contained"
                 color={'secondary'}
                 type="submit"
@@ -116,7 +129,7 @@ const Login = () => {
             &nbsp;
           </Typography>
           <NextLink href="/register" passHref>
-            <MUILink>{t('register-btn')}</MUILink>
+            <StyledMUILink>{t('register-btn')}</StyledMUILink>
           </NextLink>
         </Grid>
         {error && <FormError>{error}</FormError>}

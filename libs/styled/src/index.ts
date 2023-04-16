@@ -1,8 +1,10 @@
 import {
-  Dialog as MuiDialog,
-  Container,
-  styled,
   Button,
+  Checkbox,
+  Container,
+  Dialog as MuiDialog,
+  Link as MUILink,
+  styled,
   Typography,
 } from '@mui/material';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
@@ -12,6 +14,7 @@ export const StyledButton = styled(Button)`
   padding: 2px 30px 6px 20px;
   color: white;
   font-size: 1.2rem;
+
   & .MuiButton-startIcon svg {
     font-size: 26px;
   }
@@ -31,6 +34,10 @@ export const StyledButtonXL = styled(StyledButton)`
   font-size: 30px;
   letter-spacing: 2px;
   padding: 6px 40px 10px;
+
+  &.Mui-disabled {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+  }
 `;
 
 export const Dialog = styled(MuiDialog)`
@@ -68,9 +75,6 @@ export const StyledPageContainer = styled(Container)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // @media ${MOBILE_QUERY} {
-  //   padding-top: 110px;
-  // }
 `;
 
 export const SectionTitle = styled(Typography)`
@@ -79,4 +83,20 @@ export const SectionTitle = styled(Typography)`
   width: fit-content;
   margin-bottom: 1em;
   padding: 0 6px;
+`;
+
+export const StyledMUILink = styled(MUILink)({
+  color: 'white',
+  textDecoration: 'underline',
+  fontFamily: 'theme.fontFamily.body.0',
+  '&:hover': {
+    color: 'white',
+    textDecoration: 'none',
+  },
+});
+
+export const StyledCheckbox = styled(Checkbox)`
+  & .MuiSvgIcon-root {
+    fill: white;
+  }
 `;
