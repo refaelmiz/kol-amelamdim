@@ -2,6 +2,7 @@ import { ReactElement, useContext, useEffect, useState } from 'react';
 import {
   Box,
   Grid,
+  Link as MUILink,
   Link,
   Paper,
   TableBody,
@@ -22,7 +23,11 @@ import {
   FILE_TYPES_DICTIONARY,
   IFile,
 } from '@kol-amelamdim/types';
-import { StyledButtonXL, StyledPageContainer } from '@kol-amelamdim/styled';
+import {
+  StyledButtonXL,
+  StyledMUILink,
+  StyledPageContainer,
+} from '@kol-amelamdim/styled';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Filter } from '../../components/filter-card/Filter';
@@ -35,6 +40,7 @@ import connect from '../../db/connectMongo';
 import { File } from '@kol-amelamdim/models';
 import StyledTable from '../../components/table/StyledTable';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
+import NextLink from 'next/link';
 
 const rowsPerPage = 25;
 
@@ -135,14 +141,18 @@ const CategoryPage = ({ files, error }) => {
             <StyledTable stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell style={{ minWidth: '250px' }}>
+                  <TableCell style={{ minWidth: '370px' }}>
                     {t('table-column-name')}
                   </TableCell>
-                  <TableCell style={{ minWidth: '100px' }}>
+                  <TableCell style={{ minWidth: '120px' }}>
                     {t('table-column-author')}
                   </TableCell>
-                  <TableCell>{t('table-column-file-size')}</TableCell>
-                  <TableCell>{t('table-column-file-type')}</TableCell>
+                  <TableCell style={{ minWidth: '120px' }}>
+                    {t('table-column-file-size')}
+                  </TableCell>
+                  <TableCell style={{ minWidth: '120px' }}>
+                    {t('table-column-file-type')}
+                  </TableCell>
                   <TableCell style={{ minWidth: '400px' }}>
                     {t('table-column-file-download')}
                   </TableCell>
@@ -165,13 +175,15 @@ const CategoryPage = ({ files, error }) => {
                             </Link>
                           ) : (
                             <Box>
-                              <Link onClick={() => router.push('/register')}>
-                                הרשמו
-                              </Link>
-                              <span>או</span>
-                              <Link onClick={() => router.push('/login')}>
-                                התחברו
-                              </Link>
+                              <NextLink href="/register" passHref>
+                                <MUILink>הרשמו </MUILink>
+                              </NextLink>
+
+                              <span>או </span>
+
+                              <NextLink href="/login" passHref>
+                                <MUILink>התחברו </MUILink>
+                              </NextLink>
 
                               <span>כדי להוריד קובץ זה</span>
                             </Box>
