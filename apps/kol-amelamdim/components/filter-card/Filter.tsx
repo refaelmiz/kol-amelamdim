@@ -29,10 +29,10 @@ export const Filter = ({
           <Grid item xs={12} md={6}>
             <FilterText filterText={filterText} setFilterText={setFilterText} />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={6} md={4}>
             <FilterFileType setFileType={setFileType} fileType={fileType} />
           </Grid>
-          <Grid container item xs={4} md={2} alignItems="center">
+          <Grid container item xs={6} md={2} alignItems="center">
             <StyledButtonXL
               variant="contained"
               onClick={onClick}

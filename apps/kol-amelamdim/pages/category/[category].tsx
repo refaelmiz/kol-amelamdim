@@ -134,11 +134,17 @@ const CategoryPage = ({ files, error }) => {
             <StyledTable stickyHeader>
               <TableHead>
                 <TableRow>
-                  <TableCell>{t('table-column-name')}</TableCell>
-                  <TableCell>{t('table-column-author')}</TableCell>
+                  <TableCell style={{ minWidth: '250px' }}>
+                    {t('table-column-name')}
+                  </TableCell>
+                  <TableCell style={{ minWidth: '100px' }}>
+                    {t('table-column-author')}
+                  </TableCell>
                   <TableCell>{t('table-column-file-size')}</TableCell>
                   <TableCell>{t('table-column-file-type')}</TableCell>
-                  <TableCell>{t('table-column-file-download')}</TableCell>
+                  <TableCell style={{ minWidth: '400px' }}>
+                    {t('table-column-file-download')}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
