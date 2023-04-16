@@ -48,15 +48,6 @@ const CategoryCard = styled(Card)`
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   transition: transform 0.6s;
   border-radius: 20px;
-
-  // @media ${MOBILE_QUERY} {
-  //   min-width: auto;
-  // }
-
-  //
-  //&:hover {
-  //  transform: scale(1.03);
-  //}
 `;
 
 const SyledCardActionArea = styled(CardActionArea)`
@@ -270,6 +261,7 @@ export function Home() {
 
         {/* חומרים להורדה */}
         <Grid
+          id={'learn-categories'}
           item
           sx={{
             display: 'flex',
@@ -296,7 +288,7 @@ export function Home() {
                   <CategoryCard>
                     <Image
                       src={category.icon}
-                      alt="logo"
+                      alt={category[i18n.language]}
                       width={190}
                       height={80}
                     />
@@ -369,12 +361,6 @@ export function Home() {
                     error={!!formError}
                     value={customerQuestion}
                     onChange={(e) => setCustomerQuestion(e.target.value)}
-                    InputProps={{
-                      style: {
-                        borderRadius: '10px',
-                        background: 'white',
-                      },
-                    }}
                   />
                 </Grid>
                 <Grid item>

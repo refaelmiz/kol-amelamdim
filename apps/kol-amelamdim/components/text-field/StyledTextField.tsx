@@ -24,6 +24,9 @@ const StyledTextField = (props) => {
           fontSize: '1.4rem',
         },
       }}
+      label={props.label}
+      name={props.name}
+      required={props.required}
     >
       {props.children}
     </StyledField>

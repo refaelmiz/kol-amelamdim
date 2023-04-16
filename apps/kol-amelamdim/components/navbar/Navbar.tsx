@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { AppBar, Button, Grid, styled, useMediaQuery } from '@mui/material';
-import Image from 'next/image';
+import { AppBar, Grid, styled, useMediaQuery } from '@mui/material';
 import { i18n, useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { MOBILE_QUERY, TABLET_QUERY } from '@kol-amelamdim/constants';
@@ -14,7 +13,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import { StyledButton, StyledLangButton } from '@kol-amelamdim/styled';
 import MobileMenu from '../mobile-menu/MobileMenu';
 import ContactUsButtons from '../contact-us-buttons/ContactUsButtons';
-import Box from '@mui/material/Box';
 
 const StyledNavbar = styled(AppBar)`
   background: ${(props) => props.theme.palette.primary.light};
@@ -42,7 +40,6 @@ let isOpenedOnce = false;
 
 export const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
   const { pathname, asPath, query } = router;
   const { t } = useTranslation('home');
@@ -76,7 +73,7 @@ export const Navbar = () => {
             isOpenedOnce = true;
             setTimeout(() => {
               setOpen(true);
-            }, 30000);
+            }, 3000);
           }
         }
       })
@@ -171,20 +168,23 @@ export const Navbar = () => {
           />
         </Grid>
 
-        <Box
+        <Grid
+          onClick={() => router.push('/')}
+          role={'button'}
+          tabIndex={0}
           sx={{
             position: 'absolute',
             right: '50%',
             transform: 'translateX(50%)',
+            cursor: 'pointer',
           }}
         >
           <img
             src="/images/logo-v3.svg"
             alt="logo"
-            onClick={() => router.push('/')}
             style={{ width: isTablet ? '100px' : '140px' }}
           />
-        </Box>
+        </Grid>
         <ContactUsButtons />
       </Grid>
       <RegisterNow open={open} onClose={() => setOpen(false)} />
