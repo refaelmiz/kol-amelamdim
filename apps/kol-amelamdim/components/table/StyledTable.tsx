@@ -3,6 +3,7 @@ import React from 'react';
 
 const CustomTable = styled(Table)`
   border-radius: 20px;
+  min-width: 600px;
 `;
 
 function StyledTable(props) {

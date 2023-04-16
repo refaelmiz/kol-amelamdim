@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 import { FilterFileType } from './components/filter-file-type/filter-file-type';
 import { FilterText } from './components/filter-text/filter-text';
 import { useTranslation } from 'next-i18next';
-import { StyledButton } from '@kol-amelamdim/styled';
+import { StyledButtonXL } from '@kol-amelamdim/styled';
 
 interface FilterProps {
   setFileType: (fileType: string) => void;
@@ -25,27 +25,15 @@ export const Filter = ({
   return (
     <Grid xs={12} sx={{ mt: '20px' }}>
       <Grid container alignItems="center" sx={{ height: '100%' }}>
-        <Grid
-          item
-          container
-          alignItems="centers"
-          sx={{ margin: '10px' }}
-          spacing={3}
-        >
+        <Grid item container alignItems="centers" spacing={4} mt={2}>
           <Grid item xs={12} md={6}>
             <FilterText filterText={filterText} setFilterText={setFilterText} />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={8} md={4}>
             <FilterFileType setFileType={setFileType} fileType={fileType} />
           </Grid>
-          <Grid
-            container
-            item
-            xs={'auto'}
-            alignItems="center"
-            justifyContent="center"
-          >
-            <StyledButton
+          <Grid container item xs={4} md={2} alignItems="center">
+            <StyledButtonXL
               variant="contained"
               onClick={onClick}
               sx={{
@@ -53,10 +41,11 @@ export const Filter = ({
                 height: 'fit-content',
                 fontSize: '1.4rem',
                 fontWeight: 'bold',
+                width: '100%',
               }}
             >
               {t('filter-btn')}
-            </StyledButton>
+            </StyledButtonXL>
           </Grid>
         </Grid>
       </Grid>

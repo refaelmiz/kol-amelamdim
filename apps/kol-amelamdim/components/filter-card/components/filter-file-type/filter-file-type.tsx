@@ -35,18 +35,11 @@ export const FilterFileType = ({
   );
 
   const HiddenInputLabel = styled(InputLabel)`
-    font-size: 0;
+    font-size: 0 !important;
   `;
 
   return (
-    <Box
-      sx={
-        {
-          // minWidth: isMobile ? '200px' : '200px',
-          // marginRight: isMobile ? '10px' : '20px',
-        }
-      }
-    >
+    <Box>
       <FormControl fullWidth>
         <HiddenInputLabel>{t('select-file-type')}</HiddenInputLabel>
         <StyledSelect value={selectedValue} onChange={handleChange}>

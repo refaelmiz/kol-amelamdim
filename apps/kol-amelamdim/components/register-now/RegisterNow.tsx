@@ -1,8 +1,17 @@
-import { Box, Grid, styled, Typography, useMediaQuery } from '@mui/material';
+import {
+  Box,
+  Grid,
+  IconButton,
+  styled,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import StyledDialog from '../dialog/StyledDialog';
 import { useRouter } from 'next/router';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
 import { StyledButtonXL } from '@kol-amelamdim/styled';
+import CloseIcon from '@mui/icons-material/Close';
+import * as React from 'react';
 
 const Paragraph = styled('p')`
   margin: 0;
@@ -16,6 +25,17 @@ export function RegisterNow({ open, onClose }) {
   return (
     <StyledDialog open={open} onClose={onClose}>
       <Box sx={{ p: isMobile ? '2em 1em' : '2em 2em 3em' }}>
+        <Box sx={{ position: 'absolute', top: 0, right: 0 }}>
+          <IconButton
+            onClick={onClose}
+            aria-label="close"
+            sx={{
+              color: (theme) => theme.palette.grey[900],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
         <Grid
           container
           direction={'column'}

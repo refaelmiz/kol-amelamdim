@@ -1,10 +1,8 @@
 import { ReactElement, useContext, useEffect, useState } from 'react';
 import {
-  Button,
   Grid,
   Link,
   Paper,
-  Table,
   TableBody,
   TableCell,
   TableContainer,
@@ -12,6 +10,7 @@ import {
   TablePagination,
   TableRow,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { i18n, useTranslation } from 'next-i18next';
@@ -22,7 +21,7 @@ import {
   FILE_TYPES_DICTIONARY,
   IFile,
 } from '@kol-amelamdim/types';
-import { StyledPageContainer } from '@kol-amelamdim/styled';
+import { StyledButtonXL, StyledPageContainer } from '@kol-amelamdim/styled';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Filter } from '../../components/filter-card/Filter';
@@ -34,6 +33,7 @@ import i18nConfig from '../../next-i18next.config';
 import connect from '../../db/connectMongo';
 import { File } from '@kol-amelamdim/models';
 import StyledTable from '../../components/table/StyledTable';
+import { MOBILE_QUERY } from '@kol-amelamdim/constants';
 
 const rowsPerPage = 25;
 
@@ -85,6 +85,8 @@ const CategoryPage = ({ files, error }) => {
     }
   }, [error, setAlertType, setAlertMessage]);
 
+  const isMobile = useMediaQuery(MOBILE_QUERY);
+
   return (
     <StyledPageContainer
       sx={{
@@ -92,67 +94,80 @@ const CategoryPage = ({ files, error }) => {
         backgroundSize: 'cover',
         repeat: 'none',
         color: 'white',
+        gap: '2em',
+        justifyContent: isMobile ? 'start' : '',
       }}
     >
       <Grid
         container
         justifyContent={'center'}
-        alignItems={'center'}
-        xs={10}
+        xs={12}
+        md={10}
         sx={{
           backgroundColor: (theme) => theme.palette.grey[100],
-          p: '1em 2em 3em',
+          p: isMobile ? '1em' : '1em 2em 3em',
           borderRadius: '10px',
           color: 'black',
         }}
       >
         <Grid textAlign="center" maxWidth="600px">
-          <Typography variant="h2" component="h1" sx={{ mt: 2 }}>
+          <Typography
+            variant="h2"
+            component="h1"
+            sx={{ mt: isMobile ? '2em' : '20px' }}
+          >
             {t(`${displayedCategory[0].URL}`)}
           </Typography>
           <Typography>{t('description')}</Typography>
         </Grid>
-        <Filter
-          setFileType={setFileType}
-          fileType={fileType}
-          filterText={filterText}
-          setFilterText={setFilterText}
-          onClick={handleFilter}
-        />
-        <TableContainer component={Paper} sx={{ maxHeight: 400, mt: '20px' }}>
-          <StyledTable stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell>{t('table-column-name')}</TableCell>
-                <TableCell>{t('table-column-author')}</TableCell>
-                <TableCell>{t('table-column-file-size')}</TableCell>
-                <TableCell>{t('table-column-file-type')}</TableCell>
-                <TableCell>{t('table-column-file-download')}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredFiles
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow key={row.key}>
-                      <TableCell>{row.name}</TableCell>
-                      <TableCell>{row.author}</TableCell>
-                      <TableCell>{row.size}</TableCell>
-                      <TableCell>{row.type}</TableCell>
-                      <TableCell>
-                        {isAuthenticated ? (
-                          <Link href={row.URL}>{t('table-download-btn')}</Link>
-                        ) : (
-                          'הרשמו או התחברו כדי להוריד קובץ זה'
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </StyledTable>
-        </TableContainer>
+        <Grid item xs={11} md={10}>
+          <Filter
+            setFileType={setFileType}
+            fileType={fileType}
+            filterText={filterText}
+            setFilterText={setFilterText}
+            onClick={handleFilter}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TableContainer component={Paper} sx={{ maxHeight: 400, mt: '20px' }}>
+            <StyledTable stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t('table-column-name')}</TableCell>
+                  <TableCell>{t('table-column-author')}</TableCell>
+                  <TableCell>{t('table-column-file-size')}</TableCell>
+                  <TableCell>{t('table-column-file-type')}</TableCell>
+                  <TableCell>{t('table-column-file-download')}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filteredFiles
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow key={row.key}>
+                        <TableCell>{row.name}</TableCell>
+                        <TableCell>{row.author}</TableCell>
+                        <TableCell>{row.size}</TableCell>
+                        <TableCell>{row.type}</TableCell>
+                        <TableCell>
+                          {isAuthenticated ? (
+                            <Link href={row.URL}>
+                              {t('table-download-btn')}
+                            </Link>
+                          ) : (
+                            'הרשמו או התחברו כדי להוריד קובץ זה'
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </StyledTable>
+          </TableContainer>
+        </Grid>
+
         <TablePagination
           component="div"
           rowsPerPageOptions={[]}
@@ -161,12 +176,7 @@ const CategoryPage = ({ files, error }) => {
           page={page}
           onPageChange={handleChangePage}
         />
-        <Button
-          variant="contained"
-          onClick={() => setIsUploadFileDialogOpen(true)}
-        >
-          {t('share-btn')}
-        </Button>
+
         {isUploadFileDialogOpen && (
           <UploadFileDialog
             isOpen={isUploadFileDialogOpen}
@@ -174,6 +184,15 @@ const CategoryPage = ({ files, error }) => {
             defaultCategory={category as Category}
           />
         )}
+      </Grid>
+
+      <Grid item mb={6}>
+        <StyledButtonXL
+          variant="contained"
+          onClick={() => setIsUploadFileDialogOpen(true)}
+        >
+          {t('share-btn')}
+        </StyledButtonXL>
       </Grid>
     </StyledPageContainer>
   );

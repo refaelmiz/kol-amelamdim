@@ -64,7 +64,7 @@ export const FormError = styled('div')`
 `;
 
 export const StyledPageContainer = styled(Container)`
-  min-height: 90vh;
+  min-height: calc(100vh - 104px);
   max-width: 100% !important;
   padding: 8em 0 0 !important;
   @media ${MOBILE_QUERY} {
