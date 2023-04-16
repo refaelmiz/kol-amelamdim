@@ -1,21 +1,21 @@
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
-import { useState, useContext } from 'react';
-import {
-  TextField,
-  Button,
-  Grid,
-  Typography,
-  Link as MUILink,
-} from '@mui/material';
+import { useContext, useState } from 'react';
+import { Grid, Link as MUILink, Typography } from '@mui/material';
 import validator from 'validator';
-import { StyledPageContainer, FormError } from '@kol-amelamdim/styled';
+import {
+  FormError,
+  StyledButtonXL,
+  StyledPageContainer,
+} from '@kol-amelamdim/styled';
 import { i18n, useTranslation } from 'next-i18next';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
 import { AuthContext } from '../../context/auth-context-provider';
 import axios from '../../api';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from '../../next-i18next.config';
+
+import StyledTextField from '../../components/text-field/StyledTextField';
 
 const Login = () => {
   const [email, setEmail] = useState<string>('');
@@ -51,43 +51,67 @@ const Login = () => {
   //Todo: handle loading and errors
   return (
     <StyledPageContainer>
-      <>
-        <form onSubmit={handleSubmit}>
-          <Grid container direction={'column'}>
-            <Typography variant="h3" component="h2" sx={{ mt: 2 }}>
-              {t('h1')}
-            </Typography>
-            <TextField
-              sx={{ mt: 2 }}
-              required
-              id="outlined-required"
-              label={t('email')}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={!!error}
-            />
-            <TextField
-              sx={{ mt: 2 }}
-              value={password}
-              label={t('password')}
-              type="password"
-              required
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-              error={!!error}
-            />
-            <Button
-              sx={{ mt: 2 }}
-              variant="contained"
-              type="submit"
-              disabled={!email || !password || loading}
-            >
-              {loading ? <>רק רגע..</> : t('submit')}
-            </Button>
-          </Grid>
-        </form>
-        <Grid container sx={{ mt: 2 }}>
-          <Typography component="h4">
+      <Grid
+        container
+        direction={'column'}
+        justifyContent={'center'}
+        xs={10}
+        md={6}
+      >
+        <Grid item>
+          <form onSubmit={handleSubmit}>
+            <Grid container direction={'column'}>
+              <Typography
+                variant="h3"
+                component="h1"
+                sx={{ mt: 2, mb: 8 }}
+                textAlign={'center'}
+              >
+                {t('h1')}
+              </Typography>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <StyledTextField
+                    required
+                    id="outlined-required"
+                    label={t('email')}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    error={!!error}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <StyledTextField
+                    value={password}
+                    label={t('password')}
+                    type="password"
+                    required
+                    autoComplete="current-password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    error={!!error}
+                  />
+                </Grid>
+              </Grid>
+              <StyledButtonXL
+                sx={{ mt: 2 }}
+                variant="contained"
+                color={'secondary'}
+                type="submit"
+                disabled={!email || !password || loading}
+              >
+                {loading ? <>רק רגע..</> : t('submit')}
+              </StyledButtonXL>
+            </Grid>
+          </form>
+        </Grid>
+        <Grid
+          item
+          container
+          direction={'row'}
+          justifyContent={'center'}
+          sx={{ mt: 8 }}
+        >
+          <Typography>
             {t('register-txt')}
             &nbsp;
           </Typography>
@@ -96,7 +120,7 @@ const Login = () => {
           </NextLink>
         </Grid>
         {error && <FormError>{error}</FormError>}
-      </>
+      </Grid>
     </StyledPageContainer>
   );
 };
