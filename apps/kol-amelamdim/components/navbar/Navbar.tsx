@@ -114,9 +114,11 @@ export const Navbar = () => {
         >
           <Actions item xs={'auto'}>
             {isAuthenticated ? (
-              <StyledButton variant="text" onClick={logOut}>
-                {t('logout-btn')}
-              </StyledButton>
+              <Grid item>
+                <StyledLangButton variant="outlined" onClick={logOut}>
+                  {t('logout-btn')}
+                </StyledLangButton>
+              </Grid>
             ) : (
               <Grid container spacing={2}>
                 <Grid item>
