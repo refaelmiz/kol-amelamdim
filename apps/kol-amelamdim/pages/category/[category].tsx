@@ -1,25 +1,31 @@
-import { useEffect, useState, useContext, ReactElement } from 'react';
+import { ReactElement, useContext, useEffect, useState } from 'react';
 import {
+  Button,
+  Grid,
+  Link,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
-  Paper,
   TablePagination,
-  Link,
-  Button,
+  TableRow,
   Typography,
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { i18n, useTranslation } from 'next-i18next';
-import { Category, Categories, IFile, CategoryObj } from '@kol-amelamdim/types';
+import {
+  Categories,
+  Category,
+  CategoryObj,
+  FILE_TYPES_DICTIONARY,
+  IFile,
+} from '@kol-amelamdim/types';
 import { StyledPageContainer } from '@kol-amelamdim/styled';
-import { FILE_TYPES_DICTIONARY } from '@kol-amelamdim/types';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { FilterCard } from '../../components/filter-card/FilterCard';
+import { Filter } from '../../components/filter-card/Filter';
 import { UploadFileDialog } from '../../components';
 import { AlertContext } from '../../context/alert-context-provider';
 import { AlertLayout } from '../../layouts';
@@ -27,6 +33,7 @@ import { AuthContext } from '../../context/auth-context-provider';
 import i18nConfig from '../../next-i18next.config';
 import connect from '../../db/connectMongo';
 import { File } from '@kol-amelamdim/models';
+import StyledTable from '../../components/table/StyledTable';
 
 const rowsPerPage = 25;
 
@@ -79,12 +86,33 @@ const CategoryPage = ({ files, error }) => {
   }, [error, setAlertType, setAlertMessage]);
 
   return (
-    <StyledPageContainer>
-      <>
-        <Typography variant="h3" component="h2" sx={{ mt: 2 }}>
-          {t(`${displayedCategory[0].URL}`)}
-        </Typography>
-        <FilterCard
+    <StyledPageContainer
+      sx={{
+        backgroundImage: 'url("/images/full-page-bg.jpg")',
+        backgroundSize: 'cover',
+        repeat: 'none',
+        color: 'white',
+      }}
+    >
+      <Grid
+        container
+        justifyContent={'center'}
+        alignItems={'center'}
+        xs={10}
+        sx={{
+          backgroundColor: (theme) => theme.palette.grey[100],
+          p: '1em 2em 3em',
+          borderRadius: '10px',
+          color: 'black',
+        }}
+      >
+        <Grid textAlign="center" maxWidth="600px">
+          <Typography variant="h2" component="h1" sx={{ mt: 2 }}>
+            {t(`${displayedCategory[0].URL}`)}
+          </Typography>
+          <Typography>{t('description')}</Typography>
+        </Grid>
+        <Filter
           setFileType={setFileType}
           fileType={fileType}
           filterText={filterText}
@@ -92,7 +120,7 @@ const CategoryPage = ({ files, error }) => {
           onClick={handleFilter}
         />
         <TableContainer component={Paper} sx={{ maxHeight: 400, mt: '20px' }}>
-          <Table stickyHeader>
+          <StyledTable stickyHeader>
             <TableHead>
               <TableRow>
                 <TableCell>{t('table-column-name')}</TableCell>
@@ -123,7 +151,7 @@ const CategoryPage = ({ files, error }) => {
                   );
                 })}
             </TableBody>
-          </Table>
+          </StyledTable>
         </TableContainer>
         <TablePagination
           component="div"
@@ -146,7 +174,7 @@ const CategoryPage = ({ files, error }) => {
             defaultCategory={category as Category}
           />
         )}
-      </>
+      </Grid>
     </StyledPageContainer>
   );
 };
@@ -171,7 +199,9 @@ export async function getStaticProps(context) {
   try {
     const category = context.params.category;
     await connect();
-    const files = await File.find({ category, approved: true }).sort({ _id: -1 });
+    const files = await File.find({ category, approved: true }).sort({
+      _id: -1,
+    });
 
     return {
       props: {
