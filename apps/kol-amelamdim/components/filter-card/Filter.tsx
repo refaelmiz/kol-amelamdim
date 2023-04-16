@@ -32,10 +32,10 @@ export const Filter = ({
           sx={{ margin: '10px' }}
           spacing={3}
         >
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <FilterText filterText={filterText} setFilterText={setFilterText} />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <FilterFileType setFileType={setFileType} fileType={fileType} />
           </Grid>
           <Grid

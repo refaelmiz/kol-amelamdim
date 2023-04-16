@@ -40,10 +40,12 @@ export const FilterFileType = ({
 
   return (
     <Box
-      sx={{
-        minWidth: isMobile ? '200px' : '200px',
-        marginRight: isMobile ? '10px' : '20px',
-      }}
+      sx={
+        {
+          // minWidth: isMobile ? '200px' : '200px',
+          // marginRight: isMobile ? '10px' : '20px',
+        }
+      }
     >
       <FormControl fullWidth>
         <HiddenInputLabel>{t('select-file-type')}</HiddenInputLabel>
