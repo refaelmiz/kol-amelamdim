@@ -145,6 +145,9 @@ const defaultTheme = {
           fontSize: '22px',
           fontFamily: 'OpenSansHebrew',
         },
+        a: {
+          fontFamily: 'OpenSansHebrew',
+        },
       },
     },
   },

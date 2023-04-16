@@ -23,11 +23,7 @@ import {
   FILE_TYPES_DICTIONARY,
   IFile,
 } from '@kol-amelamdim/types';
-import {
-  StyledButtonXL,
-  StyledMUILink,
-  StyledPageContainer,
-} from '@kol-amelamdim/styled';
+import { StyledButtonXL, StyledPageContainer } from '@kol-amelamdim/styled';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Filter } from '../../components/filter-card/Filter';
@@ -176,16 +172,20 @@ const CategoryPage = ({ files, error }) => {
                           ) : (
                             <Box>
                               <NextLink href="/register" passHref>
-                                <MUILink>הרשמו </MUILink>
+                                <MUILink sx={{ fontWeight: 'regular' }}>
+                                  הרשמו
+                                </MUILink>
                               </NextLink>
 
-                              <span>או </span>
+                              <span style={{ margin: '0 10px' }}>או</span>
 
                               <NextLink href="/login" passHref>
-                                <MUILink>התחברו </MUILink>
+                                <MUILink>התחברו</MUILink>
                               </NextLink>
 
-                              <span>כדי להוריד קובץ זה</span>
+                              <span style={{ margin: '0 10px' }}>
+                                כדי להוריד קובץ זה
+                              </span>
                             </Box>
                           )}
                         </TableCell>
