@@ -27,7 +27,7 @@ import { StyledButtonXL, StyledPageContainer } from '@kol-amelamdim/styled';
 import { API_ERRORS } from '@kol-amelamdim/api-errors';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Filter } from '../../components/filter-card/Filter';
-import { UploadFileDialog } from '../../components';
+import { RegisterNow, UploadFileDialog } from '../../components';
 import { AlertContext } from '../../context/alert-context-provider';
 import { AlertLayout } from '../../layouts';
 import { AuthContext } from '../../context/auth-context-provider';
@@ -55,6 +55,11 @@ const CategoryPage = ({ files, error }) => {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
+  };
+
+  const [open, setOpen] = useState(false);
+  const registerNowHandler = () => {
+    setOpen(true);
   };
 
   const handleFilter = () => {
@@ -103,6 +108,7 @@ const CategoryPage = ({ files, error }) => {
     >
       <Grid
         container
+        item
         justifyContent={'center'}
         xs={12}
         md={10}
@@ -132,26 +138,30 @@ const CategoryPage = ({ files, error }) => {
             onClick={handleFilter}
           />
         </Grid>
+        <RegisterNow open={open} onClose={() => setOpen(false)} />
         <Grid item xs={12}>
           <TableContainer component={Paper} sx={{ maxHeight: 400, mt: '20px' }}>
             <StyledTable stickyHeader>
               <TableHead>
                 <TableRow>
+                  <TableCell style={{ minWidth: '120px' }}>
+                    {t('table-link')}
+                  </TableCell>
                   <TableCell style={{ minWidth: '370px' }}>
                     {t('table-column-name')}
                   </TableCell>
-                  <TableCell style={{ minWidth: '120px' }}>
+                  <TableCell style={{ minWidth: '150px' }}>
                     {t('table-column-author')}
                   </TableCell>
-                  <TableCell style={{ minWidth: '120px' }}>
+                  <TableCell style={{ minWidth: '150px' }}>
                     {t('table-column-file-size')}
                   </TableCell>
-                  <TableCell style={{ minWidth: '120px' }}>
+                  <TableCell style={{ minWidth: '150px' }}>
                     {t('table-column-file-type')}
                   </TableCell>
-                  <TableCell style={{ minWidth: '400px' }}>
-                    {t('table-column-file-download')}
-                  </TableCell>
+                  {/*<TableCell style={{minWidth: '400px'}}>*/}
+                  {/*  {t('table-column-file-download')}*/}
+                  {/*</TableCell>*/}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -160,35 +170,60 @@ const CategoryPage = ({ files, error }) => {
                   .map((row) => {
                     return (
                       <TableRow key={row.key}>
-                        <TableCell>{row.name}</TableCell>
-                        <TableCell>{row.author}</TableCell>
-                        <TableCell>{row.size}</TableCell>
-                        <TableCell>{row.type}</TableCell>
-                        <TableCell>
+                        <TableCell style={{ minWidth: '100px' }}>
                           {isAuthenticated ? (
                             <Link href={row.URL}>
                               {t('table-download-btn')}
                             </Link>
                           ) : (
-                            <Box>
-                              <NextLink href="/register" passHref>
-                                <MUILink sx={{ fontWeight: 'regular' }}>
-                                  הרשמו
-                                </MUILink>
-                              </NextLink>
-
-                              <span style={{ margin: '0 10px' }}>או</span>
-
-                              <NextLink href="/login" passHref>
-                                <MUILink>התחברו</MUILink>
-                              </NextLink>
-
-                              <span style={{ margin: '0 10px' }}>
-                                כדי להוריד קובץ זה
-                              </span>
-                            </Box>
+                            <>
+                              <Link
+                                tabIndex={0}
+                                onClick={registerNowHandler}
+                                sx={{ cursor: 'pointer' }}
+                              >
+                                {t('table-download-btn')}
+                              </Link>
+                            </>
                           )}
                         </TableCell>
+                        <TableCell style={{ minWidth: '370px' }}>
+                          {row.name}
+                        </TableCell>
+                        <TableCell style={{ minWidth: '150px' }}>
+                          {row.author}
+                        </TableCell>
+                        <TableCell style={{ minWidth: '150px' }}>
+                          {row.size}
+                        </TableCell>
+                        <TableCell style={{ minWidth: '150px' }}>
+                          {row.type}
+                        </TableCell>
+                        {/*<TableCell style={{minWidth: '400px'}}>*/}
+                        {/*  {isAuthenticated ? (*/}
+                        {/*    <Link href={row.URL}>*/}
+                        {/*      {t('table-download-btn')}*/}
+                        {/*    </Link>*/}
+                        {/*  ) : (*/}
+                        {/*    <Box>*/}
+                        {/*      <NextLink href="/register" passHref>*/}
+                        {/*        <MUILink sx={{fontWeight: 'regular'}}>*/}
+                        {/*          הרשמו*/}
+                        {/*        </MUILink>*/}
+                        {/*      </NextLink>*/}
+
+                        {/*      <span style={{margin: '0 10px'}}>או</span>*/}
+
+                        {/*      <NextLink href="/login" passHref>*/}
+                        {/*        <MUILink>התחברו</MUILink>*/}
+                        {/*      </NextLink>*/}
+
+                        {/*      <span style={{margin: '0 10px'}}>*/}
+                        {/*        כדי להוריד קובץ זה*/}
+                        {/*      </span>*/}
+                        {/*    </Box>*/}
+                        {/*  )}*/}
+                        {/*</TableCell>*/}
                       </TableRow>
                     );
                   })}

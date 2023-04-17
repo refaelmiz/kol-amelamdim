@@ -15,5 +15,6 @@
   "table-column-file-size": "גודל קובץ",
   "table-column-file-type": "סוג קובץ",
   "table-column-file-download": "לינק להורדה",
-  "table-download-btn": "להורדה"
+  "table-download-btn": "להורדה",
+  "table-link": "קישור"
 }

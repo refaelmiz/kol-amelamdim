@@ -1,20 +1,20 @@
-import { useState, ChangeEvent, useContext, useEffect } from 'react';
+import * as React from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import {
-  Typography,
-  Divider,
-  IconButton,
+  Box,
   Button,
-  Select,
-  MenuItem,
   FormControl,
+  Grid,
+  IconButton,
   InputLabel,
-  styled,
+  MenuItem,
   SelectChangeEvent,
+  styled,
+  Typography,
   useMediaQuery,
-  TextField,
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import { Dialog, FormError } from '@kol-amelamdim/styled';
+import { FormError, StyledButtonXL } from '@kol-amelamdim/styled';
 import { Categories, Category } from '@kol-amelamdim/types';
 import {
   MAX_FILES_ALLOWED,
@@ -28,6 +28,14 @@ import { API_ERRORS } from '@kol-amelamdim/api-errors';
 import { AlertContext } from '../../context/alert-context-provider';
 import { AuthContext } from '../../context/auth-context-provider';
 import { i18n, useTranslation } from 'next-i18next';
+import StyledDialog from '../dialog/StyledDialog';
+import StyledTextField from '../text-field/StyledTextField';
+import StyledSelect from '../select/StyledSelect';
+
+const Paragraph = styled('p')`
+  margin: 0;
+  text-align: center;
+`;
 
 const CategoryLabel = styled(InputLabel)`
   &.MuiFormLabel-root {
@@ -139,78 +147,120 @@ export const UploadFileDialog = ({
   };
 
   return (
-    <Dialog open={isAuthenticated && isOpen}>
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={handleCloseUploadFileDialog}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
+    <StyledDialog open={isAuthenticated && isOpen} onClose={onClose}>
+      <Box sx={{ p: isMobile ? '2em 1em' : '2em 3em' }}>
+        {onClose ? (
+          <Box sx={{ position: 'absolute', top: 0, right: 0 }}>
+            <IconButton
+              onClick={onClose}
+              aria-label="close"
+              sx={{
+                color: (theme) => theme.palette.grey[900],
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        ) : null}
+
+        <Grid
+          container
+          direction={'row'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          spacing={4}
         >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
+          <Grid item>
+            <Typography
+              variant="h2"
+              component="h2"
+              sx={{ mb: 3, textAlign: 'center' }}
+            >
+              {t('dialog-header')}
+            </Typography>
+            <Paragraph>{t('dialog-subheader')}</Paragraph>
+          </Grid>
+          <Grid item container justifyContent="center" xs={12}>
+            <StyledTextField
+              label={t('dialog-file-name')}
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
+              error={!fileName && !!submissionError}
+            />
+          </Grid>
+          <Grid container item>
+            <FormControl sx={{ width: '100%' }}>
+              <CategoryLabel id="category-selection">
+                {t('dialog-file-type')}
+              </CategoryLabel>
+              <StyledSelect
+                value={category}
+                labelId="category-selection"
+                id="demo-simple-select"
+                error={!category && !!submissionError}
+                onChange={(e: SelectChangeEvent) => setCategory(e.target.value)}
+              >
+                {Categories.map((category) => {
+                  return (
+                    <MenuItem key={category.URL} value={category.URL}>
+                      {category[i18n.language]}
+                    </MenuItem>
+                  );
+                })}
+              </StyledSelect>
+            </FormControl>
+          </Grid>
+          <Grid item sx={{ width: '100%' }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              component={'label'}
+              sx={{
+                borderRadius: '100px',
+                padding: '2px 30px 6px 20px',
+                color: 'white',
+                fontSize: '1.4rem !important',
+                width: '100%',
+              }}
+            >
+              {t('dialog-file-upload-btn')}
+              <input type="file" onChange={handleFileSelection} hidden />
+            </Button>
+          </Grid>
+          <Grid item>
+            {selectedFile?.name && (
+              <Typography sx={{ mt: 1, fontSize: '16px' }}>
+                {selectedFile.name}
+              </Typography>
+            )}
+          </Grid>
 
-      <Typography variant="h2" component="h3" sx={{ mt: 1 }}>
-        {t('dialog-header')}
-      </Typography>
-      <Typography component="h4">{t('dialog-subheader')}</Typography>
+          <Grid item xs={12}>
+            <StyledButtonXL
+              sx={{ mt: isMobile ? 7 : 'auto' }}
+              variant="contained"
+              onClick={handleFileSubmission}
+              disabled={isUploadButtonDisabled}
+            >
+              {t('dialog-submit')}
+            </StyledButtonXL>
+          </Grid>
+          <Grid item xs={12}>
+            {isUploadingInProcess && !submissionError && (
+              <UploadingIndicatorText>
+                {t('dialog-loading')}
+              </UploadingIndicatorText>
+            )}
 
-      <Divider sx={{ mt: 4, mb: 4 }} />
-      <TextField
-        label={t('dialog-file-name')}
-        sx={{ mb: 3 }}
-        value={fileName}
-        onChange={(e) => setFileName(e.target.value)}
-        error={!fileName && !!submissionError}
-      />
-      <FormControl sx={{ mb: 3 }}>
-        <CategoryLabel id="category-selection">
-          {t('dialog-file-type')}
-        </CategoryLabel>
-        <Select
-          value={category}
-          labelId="category-selection"
-          id="demo-simple-select"
-          error={!category && !!submissionError}
-          onChange={(e: SelectChangeEvent) => setCategory(e.target.value)}
-        >
-          {Categories.map((category) => {
-            return (
-              <MenuItem key={category.URL} value={category.URL}>
-                {category[i18n.language]}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
-      <Button variant="outlined" component="label">
-        {t('dialog-file-upload-btn')}
-        <input type="file" onChange={handleFileSelection} hidden />
-      </Button>
-      {selectedFile?.name && (
-        <Typography sx={{ mt: 1, fontSize: '16px' }}>
-          {selectedFile.name}
-        </Typography>
-      )}
-
-      <Button
-        sx={{ mt: isMobile ? 7 : 'auto' }}
-        variant="contained"
-        onClick={handleFileSubmission}
-        disabled={isUploadButtonDisabled}
-      >
-        {t('dialog-submit')}
-      </Button>
-      {isUploadingInProcess && !submissionError && (
-        <UploadingIndicatorText>{t('dialog-loading')}</UploadingIndicatorText>
-      )}
-      <FormError>{submissionError}</FormError>
-    </Dialog>
+            {submissionError && (
+              <FormError sx={{ textAlign: 'center' }}>
+                {submissionError}
+              </FormError>
+            )}
+          </Grid>
+        </Grid>
+      </Box>
+    </StyledDialog>
   );
 };
 

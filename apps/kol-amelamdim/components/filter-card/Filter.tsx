@@ -23,7 +23,7 @@ export const Filter = ({
   const { t } = useTranslation('category');
 
   return (
-    <Grid xs={12} sx={{ mt: '20px' }}>
+    <Grid item xs={12} sx={{ mt: '20px' }}>
       <Grid container alignItems="center" sx={{ height: '100%' }}>
         <Grid item container alignItems="centers" spacing={4} mt={2}>
           <Grid item xs={12} md={6}>

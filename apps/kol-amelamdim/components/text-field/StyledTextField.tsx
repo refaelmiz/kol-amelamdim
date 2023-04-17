@@ -24,6 +24,7 @@ const StyledTextField = (props) => {
       label={props.label}
       name={props.name}
       required={props.required}
+      type={props.type}
     >
       {props.children}
     </StyledField>
