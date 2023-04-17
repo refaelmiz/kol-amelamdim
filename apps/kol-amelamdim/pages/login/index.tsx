@@ -61,6 +61,7 @@ const Login = () => {
     >
       <Grid
         container
+        item
         direction={'column'}
         justifyContent={'center'}
         xs={10}

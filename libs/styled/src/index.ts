@@ -3,6 +3,7 @@ import {
   Checkbox,
   Container,
   Dialog as MuiDialog,
+  InputLabel,
   Link as MUILink,
   styled,
   Typography,
@@ -99,4 +100,8 @@ export const StyledCheckbox = styled(Checkbox)`
   & .MuiSvgIcon-root {
     fill: white;
   }
+`;
+
+export const HiddenInputLabel = styled(InputLabel)`
+  font-size: 0 !important;
 `;

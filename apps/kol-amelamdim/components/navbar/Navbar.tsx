@@ -73,7 +73,7 @@ export const Navbar = () => {
             isOpenedOnce = true;
             setTimeout(() => {
               setOpen(true);
-            }, 3000);
+            }, 30000);
           }
         }
       })

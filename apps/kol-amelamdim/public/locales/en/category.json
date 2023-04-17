@@ -15,5 +15,6 @@
   "table-column-file-size": "File size",
   "table-column-file-type": "File type",
   "table-column-file-download": "Download URL",
-  "table-download-btn": "download"
+  "table-download-btn": "download",
+  "table-link": "link"
 }

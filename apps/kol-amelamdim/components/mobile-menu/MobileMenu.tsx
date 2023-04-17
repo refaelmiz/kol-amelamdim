@@ -85,7 +85,11 @@ export default function MobileMenu({
 
       <Actions>
         {isAuthenticated ? (
-          <StyledButton variant="text" onClick={logOut}>
+          <StyledButton
+            variant="outlined"
+            sx={{ color: 'black' }}
+            onClick={logOut}
+          >
             {t('logout-btn')}
           </StyledButton>
         ) : (

@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { StyledPageContainer } from '@kol-amelamdim/styled';
-import { Typography, styled } from '@mui/material';
+import { Box, Container, styled, Typography } from '@mui/material';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import i18nConfig from '../../next-i18next.config';
 import { useTranslation } from 'next-i18next';
-import { WeeklyArticle } from '@kol-amelamdim/models';
-import connect from '../../db/connectMongo';
 import axios from 'axios';
 
-const WeeklyArticleContainer = styled(StyledPageContainer)`
-  padding: 125px 0 70px;
+const WeeklyArticleContainer = styled(Container)`
+  min-height: calc(100vh - 104px);
+  padding: 4em 2em 0 !important;
+  background: ${(props) => props.theme.palette.primary.light};
+
   h1,
   p {
     margin: 0;
@@ -41,37 +41,64 @@ const Index = () => {
 
   if (isLoading && !activeArticle?.title) {
     return (
-      <WeeklyArticleContainer>
-        <Typography variant="h2" align="center">
-          מאמר בטעינה
-        </Typography>
-      </WeeklyArticleContainer>
+      <Box
+        sx={{
+          backgroundImage: 'url("/images/full-page-bg.jpg")',
+          backgroundSize: 'cover',
+          repeat: 'none',
+          padding: { xs: '2em 0px 1px', md: '8em 2em' },
+        }}
+      >
+        <WeeklyArticleContainer>
+          <Typography variant="h2" align="center">
+            מאמר בטעינה
+          </Typography>
+        </WeeklyArticleContainer>
+      </Box>
     );
   } else if (activeArticle?.content && activeArticle?.title && !isLoading) {
     return (
-      <WeeklyArticleContainer>
-        <Typography variant="h1" component="h1">
-          {activeArticle.title}
-        </Typography>
-        <Typography variant="h2" component="h2" sx={{ mb: 3 }}>
-          {activeArticle.description}
-        </Typography>
-        <div
-          className="content"
-          dangerouslySetInnerHTML={{ __html: activeArticle.content }}
-        ></div>
-      </WeeklyArticleContainer>
+      <Box
+        sx={{
+          backgroundImage: 'url("/images/full-page-bg.jpg")',
+          backgroundSize: 'cover',
+          repeat: 'none',
+          padding: { xs: '2em 0px 1px', md: '8em 2em' },
+        }}
+      >
+        <WeeklyArticleContainer>
+          <Typography variant="h1" component="h1">
+            {activeArticle.title}
+          </Typography>
+          <Typography variant="h2" component="h2" sx={{ mb: 3 }}>
+            {activeArticle.description}
+          </Typography>
+          <div
+            className="content"
+            dangerouslySetInnerHTML={{ __html: activeArticle.content }}
+          ></div>
+        </WeeklyArticleContainer>
+      </Box>
     );
   } else if (!isLoading && !activeArticle?.title) {
     return (
-      <WeeklyArticleContainer>
-        <Typography variant="h2" align="center">
-          {t('no-article-h2')}
-        </Typography>
-        <Typography variant="h3" align="center">
-          {t('no-article-h3')}
-        </Typography>
-      </WeeklyArticleContainer>
+      <Box
+        sx={{
+          backgroundImage: 'url("/images/full-page-bg.jpg")',
+          backgroundSize: 'cover',
+          repeat: 'none',
+          padding: { xs: '2em 0px 1px', md: '8em 2em' },
+        }}
+      >
+        <WeeklyArticleContainer>
+          <Typography variant="h2" align="center">
+            {t('no-article-h2')}
+          </Typography>
+          <Typography variant="h3" align="center">
+            {t('no-article-h3')}
+          </Typography>
+        </WeeklyArticleContainer>
+      </Box>
     );
   }
 };

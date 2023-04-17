@@ -12,6 +12,7 @@ import { FILE_TYPES_DICTIONARY } from '@kol-amelamdim/types';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
 import { useTranslation } from 'next-i18next';
 import StyledSelect from 'apps/kol-amelamdim/components/select/StyledSelect';
+import { HiddenInputLabel } from '@kol-amelamdim/styled';
 
 interface FilterFileTypeProps {
   fileType: string;
@@ -33,10 +34,6 @@ export const FilterFileType = ({
   const [selectedValue, setSelectedValue] = React.useState(
     FILE_TYPES_DICTIONARY.all
   );
-
-  const HiddenInputLabel = styled(InputLabel)`
-    font-size: 0 !important;
-  `;
 
   return (
     <Box>

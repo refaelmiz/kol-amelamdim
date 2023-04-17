@@ -29,7 +29,9 @@ export const Footer = () => {
         <Grid item xs={'auto'}>
           <Typography align="center">{t('rights')}</Typography>
         </Grid>
-        <ContactUsButtons className="title" />
+        <Grid item sx={{ display: { xs: 'none', md: 'block' } }}>
+          <ContactUsButtons className="title" />
+        </Grid>
       </Grid>
     </StyledFooter>
   );

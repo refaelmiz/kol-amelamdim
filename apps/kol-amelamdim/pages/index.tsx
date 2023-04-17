@@ -67,6 +67,9 @@ const Hero = styled('div')`
   color: white;
   position: relative;
   padding: 2em;
+  @media ${MOBILE_QUERY} {
+    padding: 1em;
+  }
   text-align: center;
 `;
 
@@ -134,26 +137,29 @@ export function Home() {
         </Typography>
         <Grid
           container
+          item
           justifyContent={'center'}
           gap={3}
           mt={8}
-          sx={{ position: 'absolute', bottom: '-20px' }}
+          sx={{ position: isMobile ? '' : 'absolute', bottom: '-35px' }}
         >
-          <Grid item>
+          <Grid item xs={10} sm={'auto'}>
             <StyledButtonXL
               size="large"
               variant="contained"
               color="secondary"
               onClick={() => setIsUploadFileDialogOpen(true)}
+              sx={{ width: '100%' }}
             >
               {t('share-btn')}
             </StyledButtonXL>
           </Grid>
-          <Grid item>
+          <Grid item xs={10} sm={'auto'}>
             <StyledButtonXL
               size="large"
               variant="contained"
               onClick={() => router.push('/#learn-categories')}
+              sx={{ width: '100%' }}
             >
               {t('download-btn')}
             </StyledButtonXL>
@@ -234,17 +240,14 @@ export function Home() {
                 height: { md: '300px' },
                 gap: { md: '3em', xs: '1em' },
                 color: 'white',
-                paddingTop: { xs: '3em' },
-                paddingBottom: { xs: '3em' },
+                padding: { xs: '3em 1em' },
               }}
             >
               <Grid item>
                 <Typography variant="h3" component="h3" align="center">
-                  מלמדים ואנשי חינוך יקרים
                   {activeArticle.title}
                 </Typography>
                 <Typography align="center">
-                  הסבר קצרצר על דרכי השימוש במערכת
                   {activeArticle.description}
                 </Typography>
               </Grid>
@@ -281,7 +284,7 @@ export function Home() {
             sx={{ gap: '40px' }}
           >
             {Categories.map((category) => (
-              <Grid container key={category.URL} xs={'auto'}>
+              <Grid container key={category.URL} item xs={'auto'}>
                 <SyledCardActionArea
                   onClick={() => router.push(`/category/${category.URL}`)}
                 >
