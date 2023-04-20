@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Dialog,
-  Grid,
-  styled,
-  TextField,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
 import validator from 'validator';
 import axios from 'axios';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
@@ -26,7 +17,7 @@ interface CourseRegisterDialogProps {
 }
 
 const CourseRegisterDialog = ({ open, onClose }: CourseRegisterDialogProps) => {
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(true);
   const [formValues, setFormValues] = useState({
     email: '',
     name: '',
@@ -90,12 +81,18 @@ const CourseRegisterDialog = ({ open, onClose }: CourseRegisterDialogProps) => {
               >
                 חשוב!
               </Typography>
-              אם אינך רואה את המייל ששלחתי בזמן הקרוב
+              <span> אם אינך רואה את המייל ששלחתי בזמן הקרוב</span>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
-              בדוק ב"ספאם" או ב"קידומי מכירות", אולי הגיע המייל לשם בטעות,
+              <span>
+                {' '}
+                בדוק ב"ספאם" או ב"קידומי מכירות", אולי הגיע המייל לשם בטעות,
+              </span>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
-              א"כ חשוב שתעביר אותו לדואר נכנס הראשי כדי שלא תפספס בטעות את
-              המיילים עם השיעורים הבאים
+              <span>
+                {' '}
+                א"כ חשוב שתעביר אותו לדואר נכנס הראשי כדי שלא תפספס בטעות את
+                המיילים עם השיעורים הבאים
+              </span>
             </Grid>
 
             <Grid item xs={12} mt={2}>
