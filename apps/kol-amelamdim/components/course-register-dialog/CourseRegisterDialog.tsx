@@ -17,7 +17,7 @@ interface CourseRegisterDialogProps {
 }
 
 const CourseRegisterDialog = ({ open, onClose }: CourseRegisterDialogProps) => {
-  const [isFormSubmitted, setIsFormSubmitted] = useState(true);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [formValues, setFormValues] = useState({
     email: '',
     name: '',
@@ -82,14 +82,15 @@ const CourseRegisterDialog = ({ open, onClose }: CourseRegisterDialogProps) => {
                 חשוב!
               </Typography>
               <span> אם אינך רואה את המייל ששלחתי בזמן הקרוב</span>
-              {/* eslint-disable-next-line react/no-unescaped-entities */}
+
               <span>
-                {' '}
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 בדוק ב"ספאם" או ב"קידומי מכירות", אולי הגיע המייל לשם בטעות,
               </span>
-              {/* eslint-disable-next-line react/no-unescaped-entities */}
+
               <span>
                 {' '}
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 א"כ חשוב שתעביר אותו לדואר נכנס הראשי כדי שלא תפספס בטעות את
                 המיילים עם השיעורים הבאים
               </span>
