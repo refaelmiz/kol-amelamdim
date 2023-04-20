@@ -1,10 +1,9 @@
 import { ReactElement, useContext, useEffect, useState } from 'react';
 import {
-  Box,
   Grid,
-  Link as MUILink,
   Link,
   Paper,
+  styled,
   TableBody,
   TableCell,
   TableContainer,
@@ -36,7 +35,6 @@ import connect from '../../db/connectMongo';
 import { File } from '@kol-amelamdim/models';
 import StyledTable from '../../components/table/StyledTable';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
-import NextLink from 'next/link';
 
 const rowsPerPage = 25;
 
@@ -56,6 +54,16 @@ const CategoryPage = ({ files, error }) => {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
+
+  const StyledTablePagination = styled(TablePagination)`
+    .MuiTablePagination-displayedRows {
+      direction: rtl;
+    }
+
+    &.MuiTableCell-root {
+      border: none;
+    }
+  `;
 
   const [open, setOpen] = useState(false);
   const registerNowHandler = () => {
@@ -234,6 +242,11 @@ const CategoryPage = ({ files, error }) => {
 
         <TablePagination
           component="div"
+          labelDisplayedRows={({ from, to, count }) =>
+            `${from}-${to} ${t('from-to')} ${
+              count !== -1 ? count : `${t('more-then')} ${to}`
+            }`
+          }
           rowsPerPageOptions={[]}
           count={filteredFiles.length}
           rowsPerPage={rowsPerPage}
