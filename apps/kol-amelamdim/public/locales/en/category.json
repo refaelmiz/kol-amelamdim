@@ -16,5 +16,7 @@
   "table-column-file-type": "File type",
   "table-column-file-download": "Download URL",
   "table-download-btn": "download",
-  "table-link": "link"
+  "table-link": "link",
+  "from-to": "of",
+  "more-then": "more than"
 }
