@@ -66,19 +66,49 @@ const CourseRegisterDialog = ({ open, onClose }: CourseRegisterDialogProps) => {
     <StyledDialog open={open} onClose={onClose}>
       <Box sx={{ p: isMobile ? '16px 4px' : 4 }}>
         {isFormSubmitted ? (
-          <Grid container justifyContent="center" alignItems="center">
-            <Typography variant="h1" align="center" sx={{ mb: 2 }}>
-              הטופס נשלח בהצלחה
-            </Typography>
-            <StyledButton
-              variant="contained"
-              onClick={() => {
-                setIsFormSubmitted(false);
-                onClose();
-              }}
-            >
-              סגירה
-            </StyledButton>
+          <Grid container item direction="column" p={4} pt={2} spacing={3}>
+            <Grid item>
+              <Typography
+                variant="body2"
+                align="center"
+                sx={{ fontSize: '2.5rem' }}
+              >
+                הטופס נשלח בהצלחה
+              </Typography>
+            </Grid>
+
+            <Grid item justifyContent="center" textAlign={'center'}>
+              <Typography
+                variant="body2"
+                align="center"
+                sx={{
+                  fontSize: '1.5rem',
+                  display: 'inline',
+                  color: (theme) => theme.palette.secondary.main,
+                  marginRight: '10px',
+                }}
+              >
+                חשוב!
+              </Typography>
+              אם אינך רואה את המייל ששלחתי בזמן הקרוב
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
+              בדוק ב"ספאם" או ב"קידומי מכירות", אולי הגיע המייל לשם בטעות,
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
+              א"כ חשוב שתעביר אותו לדואר נכנס הראשי כדי שלא תפספס בטעות את
+              המיילים עם השיעורים הבאים
+            </Grid>
+
+            <Grid item xs={12} mt={2}>
+              <StyledButton
+                variant="contained"
+                onClick={() => {
+                  setIsFormSubmitted(false);
+                  onClose();
+                }}
+              >
+                סגירה
+              </StyledButton>
+            </Grid>
           </Grid>
         ) : (
           <form onSubmit={handleSubmit}>
@@ -90,7 +120,7 @@ const CourseRegisterDialog = ({ open, onClose }: CourseRegisterDialogProps) => {
             >
               <Grid item>
                 <Typography variant="h2" align="center" sx={{ mb: 1 }}>
-                  הרשמה לקבלת הקורס לכתובת המייל
+                  הרשמה לקבלת המדריך לכתובת המייל
                 </Typography>
               </Grid>
 
