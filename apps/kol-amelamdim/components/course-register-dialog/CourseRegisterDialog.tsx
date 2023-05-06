@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
-import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Link,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import validator from 'validator';
 import axios from 'axios';
 import { MOBILE_QUERY } from '@kol-amelamdim/constants';
 import {
   StyledButton,
   StyledButtonXL,
+  StyledCheckbox,
   StyledLangButton,
+  StyledMUILink,
 } from '@kol-amelamdim/styled';
 import StyledTextField from '../text-field/StyledTextField';
 import StyledDialog from '../dialog/StyledDialog';
+import { useTranslation } from 'next-i18next';
+import TermsDialog from '../terms-dialog/TermsDialog';
 
 interface CourseRegisterDialogProps {
   open: boolean;
@@ -23,13 +35,19 @@ const CourseRegisterDialog = ({ open, onClose }: CourseRegisterDialogProps) => {
     name: '',
   });
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isChecked, setIsChecked] = useState(true);
   const isMobile = useMediaQuery(MOBILE_QUERY);
+  const [termsDialogOpen, setTermsDialogOpen] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
   };
 
   const handleSubmit = async (e) => {
@@ -146,8 +164,34 @@ const CourseRegisterDialog = ({ open, onClose }: CourseRegisterDialogProps) => {
                 />
               </Grid>
 
+              <Grid container item alignItems="center" justifyContent="center">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={isChecked}
+                      required
+                      onChange={handleCheckboxChange}
+                      name="acceptTerms"
+                    />
+                  }
+                  label={'אני מסכים'}
+                />
+                <Link
+                  sx={{ cursor: 'pointer' }}
+                  role={'button'}
+                  tabIndex={0}
+                  onClick={() => setTermsDialogOpen(true)}
+                >
+                  {'לתנאי התקנון'}
+                </Link>
+              </Grid>
+
               <Grid item container justifyContent="center">
-                <StyledButtonXL type="submit" variant="contained">
+                <StyledButtonXL
+                  disabled={!isChecked}
+                  type="submit"
+                  variant="contained"
+                >
                   לקבלת המדריך
                 </StyledButtonXL>
               </Grid>
@@ -170,6 +214,10 @@ const CourseRegisterDialog = ({ open, onClose }: CourseRegisterDialogProps) => {
           </form>
         )}
       </Box>
+      <TermsDialog
+        isOpen={termsDialogOpen}
+        onClose={() => setTermsDialogOpen(false)}
+      />
     </StyledDialog>
   );
 };
