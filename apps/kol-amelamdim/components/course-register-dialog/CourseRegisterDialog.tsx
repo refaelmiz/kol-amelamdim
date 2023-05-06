@@ -99,7 +99,7 @@ const CourseRegisterDialog = ({ open, onClose }: CourseRegisterDialogProps) => {
               >
                 חשוב!
               </Typography>
-              <span> אם אינך רואה את המייל ששלחתי בזמן הקרוב</span>
+              <span>אם אינך רואה את המייל ששלחתי בזמן הקרוב, </span>
 
               <span>
                 {/* eslint-disable-next-line react/no-unescaped-entities */}
