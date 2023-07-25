@@ -189,7 +189,7 @@ export function Home() {
               onClick={() => setCourseDialogOpen(true)}
             >
               <Image
-                src="/images/course.webp"
+                src="/images/courses-02.webp"
                 alt="course"
                 width={777}
                 height={398}
@@ -198,22 +198,30 @@ export function Home() {
             </Grid>
             {/*טקסטים*/}
             <Grid item xs={12} lg={6} sx={{ textAlign: 'center' }}>
-              <Typography variant="h2">קיבלת הצעה להיות מלמד?</Typography>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
+              <Typography variant="h2">
+                'לנצח במילים' מתנה רק בשבילך!
+              </Typography>
               <Typography variant="body2">
                 {/* eslint-disable-next-line react/no-unescaped-entities */}
-                חושב שבקו"ח שלך אינך מצליח לתת דגשים על ההישגים שלך?
+                הצטרף למסע שבו תלמד את היכולת להשפיע על תלמידיך וליצור אווירה של
+                רוגע בכיתה.
               </Typography>
               <Typography variant="body1" sx={{ mt: 4 }}>
-                קבל עכשיו במתנה את המדריך:
+                כפי שמנצח מתזמר במיומנות את המקהלה, כך גם לך יש את הכוח באמצעות
+                המילים להשפיע על עיצוב ונראות הכיתה.
               </Typography>
-              <Typography variant="h3">בידול עוצמתי בעולם ההוראה</Typography>
-
+              <Typography variant="h3" sx={{ mt: 4 }}>
+                קבל עכשיו במתנה את המדריך
+              </Typography>
               {/* eslint-disable-next-line react/no-unescaped-entities */}
+              <Typography variant="h2" sx={{ mb: 4, fontSize: '4rem' }}>
+                {' '}
+                "לנצח במילים"
+              </Typography>
               <Typography variant="body1">
-                {/* eslint-disable-next-line react/no-unescaped-entities */}
-                מדריך עם שיטה מוכחת לכתיבת קו"ח שמושכת את העין ומבליטה את
-                הכישורים שלך במיוחד בעולם ההוראה והחינוך...
+                {' '}
+                המדריך שמלמד איך משנים מציאות בעזרת מילים.
               </Typography>
               <StyledButtonXL
                 variant="contained"
