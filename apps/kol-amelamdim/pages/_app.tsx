@@ -14,6 +14,7 @@ import { Navbar, Footer } from '../components';
 import { AlertContextProvider } from '../context/alert-context-provider';
 import { AuthProvider } from '../context/auth-context-provider';
 import './styles.css';
+import Script from "next/script";
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -64,6 +65,11 @@ function KolAmelamdimApp({ Component, pageProps }: AppPropsWithLayout) {
           </ThemeProvider>
         </AlertContextProvider>
       </RTL>
+      <Script
+        id="ungic-connector"
+        async
+        src="https://space.webto.pro/client/connector?cid=660a65ebc4fdc60f21b39ae5"
+      />
     </>
   );
 }
